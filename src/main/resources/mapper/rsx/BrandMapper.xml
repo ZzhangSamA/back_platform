@@ -33,7 +33,7 @@
       #{brandIcon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{supplierId,jdbcType=INTEGER}, #{status,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.itheima.mybatis.pojo.Brand">
+  <insert id="insertSelective" parameterType="com.back.rsx.pojo.Brand">
     insert into brand
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="brandId != null">
@@ -88,7 +88,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.mybatis.pojo.Brand">
+  <update id="updateByPrimaryKeySelective" parameterType="com.back.rsx.pojo.Brand">
     update brand
     <set>
       <if test="brandName != null">
@@ -115,7 +115,7 @@
     </set>
     where brand_id = #{brandId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.itheima.mybatis.pojo.Brand">
+  <update id="updateByPrimaryKey" parameterType="com.back.rsx.pojo.Brand">
     update brand
     set brand_name = #{brandName,jdbcType=VARCHAR},
       brand_number = #{brandNumber,jdbcType=INTEGER},
@@ -126,7 +126,7 @@
       status = #{status,jdbcType=BIT}
     where brand_id = #{brandId,jdbcType=INTEGER}
   </update>
-  <resultMap id="BaseResultMap" type="com.itheima.mybatis.pojo.Brand">
+  <resultMap id="BaseResultMap" type="com.back.rsx.pojo.Brand">
     <id column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
     <result column="brand_number" jdbcType="INTEGER" property="brandNumber" />
@@ -198,20 +198,7 @@
     brand_id, brand_name, brand_number, brand_icon, create_time, update_time, supplier_id, 
     status
   </sql>
-  <select id="selectByExample" parameterType="com.itheima.mybatis.pojo.BrandExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from brand
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -228,7 +215,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.itheima.mybatis.pojo.Brand">
+  <insert id="insert" parameterType="com.back.rsx.pojo.Brand">
     insert into brand (brand_id, brand_name, brand_number, 
       brand_icon, create_time, update_time, 
       supplier_id, status)
@@ -236,7 +223,7 @@
       #{brandIcon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{supplierId,jdbcType=INTEGER}, #{status,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.itheima.mybatis.pojo.Brand">
+  <insert id="insertSelective" parameterType="com.back.rsx.pojo.Brand">
     insert into brand
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="brandId != null">
@@ -291,59 +278,10 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.itheima.mybatis.pojo.BrandExample" resultType="java.lang.Integer">
-    select count(*) from brand
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update brand
-    <set>
-      <if test="record.brandId != null">
-        brand_id = #{record.brandId,jdbcType=INTEGER},
-      </if>
-      <if test="record.brandName != null">
-        brand_name = #{record.brandName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.brandNumber != null">
-        brand_number = #{record.brandNumber,jdbcType=INTEGER},
-      </if>
-      <if test="record.brandIcon != null">
-        brand_icon = #{record.brandIcon,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.supplierId != null">
-        supplier_id = #{record.supplierId,jdbcType=INTEGER},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update brand
-    set brand_id = #{record.brandId,jdbcType=INTEGER},
-      brand_name = #{record.brandName,jdbcType=VARCHAR},
-      brand_number = #{record.brandNumber,jdbcType=INTEGER},
-      brand_icon = #{record.brandIcon,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      supplier_id = #{record.supplierId,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=BIT}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.mybatis.pojo.Brand">
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.back.rsx.pojo.Brand">
     update brand
     <set>
       <if test="brandName != null">
@@ -370,7 +308,7 @@
     </set>
     where brand_id = #{brandId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.itheima.mybatis.pojo.Brand">
+  <update id="updateByPrimaryKey" parameterType="com.back.rsx.pojo.Brand">
     update brand
     set brand_name = #{brandName,jdbcType=VARCHAR},
       brand_number = #{brandNumber,jdbcType=INTEGER},
