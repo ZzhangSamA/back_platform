@@ -6,6 +6,7 @@ import com.back.rsx.pojo.GoodsInfo;
 import com.back.rsx.service.GoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,12 +17,14 @@ public class GoodsTypeServiceImp implements GoodsTypeService {
 
 
     public List<GoodsTypeDto> getAllGoodsType() {
-        return null;
+        return goodsTypeMapper.getAllGoodsType();
     }
 
     public List<GoodsInfo> getAllGoodsTypeTest() {
-        return null;
+        return goodsTypeMapper.getAllGoodsTypeTest();
     }
+
+
 }
 
 

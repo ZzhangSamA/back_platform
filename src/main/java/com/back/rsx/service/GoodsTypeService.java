@@ -8,4 +8,5 @@ import java.util.List;
 public interface GoodsTypeService {
     List<GoodsTypeDto> getAllGoodsType();
     List<GoodsInfo> getAllGoodsTypeTest();
+
 }
