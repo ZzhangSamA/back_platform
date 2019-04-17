@@ -1,6 +1,7 @@
 package com.back.rsx.dto;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +12,9 @@ public class GoodsTypeDto {
 
     private Integer parentId;
 
-    private Date createTime;
+    private String createTime;
 
-    private Date updateTime;
+    private String updateTime;
 
     private List<GoodsTypeDto> children ;
 
@@ -41,20 +42,45 @@ public class GoodsTypeDto {
         this.parentId = parentId;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
+
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        if(createTime==null){
+            this.createTime = null;
+            return;
+        }
+        String dateStr = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateStr = sdf.format(createTime);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        this.createTime = dateStr;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+        if(updateTime==null){
+            this.updateTime = null;
+            return;
+        }
+        String dateStr = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateStr = sdf.format(updateTime);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        this.updateTime = dateStr;
     }
 
 
