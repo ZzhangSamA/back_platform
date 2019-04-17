@@ -1,4 +1,4 @@
 package com.back.yxy.service;
 
-public class ServiceDemo {
+public interface LabelService {
 }
