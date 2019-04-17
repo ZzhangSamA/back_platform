@@ -1,6 +1,6 @@
 package com.back.yh.mapper;
 
-import com.pet.yh.pojo.Role;
+import com.back.yh.pojo.Role;
 
 public interface RoleMapper {
     /**

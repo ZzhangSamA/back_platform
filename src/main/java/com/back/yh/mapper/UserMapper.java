@@ -1,6 +1,6 @@
 package com.back.yh.mapper;
 
-import com.pet.yh.pojo.User;
+import com.back.yh.pojo.User;
 
 public interface UserMapper {
     /**

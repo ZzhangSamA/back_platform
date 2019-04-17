@@ -1,6 +1,6 @@
 package com.back.yh.mapper;
 
-import com.pet.yh.pojo.Menu;
+import com.back.yh.pojo.Menu;
 
 public interface MenuMapper {
     /**
