@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.rsx.mapper.GoodsTypeMapper">
+  <resultMap id="BaseResultMap" type="com.back.rsx.pojo.GoodsType">
+    <id column="goods_type_id" jdbcType="INTEGER" property="goodsTypeId" />
+    <result column="goods_type_name" jdbcType="VARCHAR" property="goodsTypeName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="BIT" property="status" />
+  </resultMap>
+
+
+
+
+  <select id="getAllGoodsType" resultMap="goodsTypeDtoMap">
+    SELECT g1.*,g2.goods_type_id cid,g2.create_time ccreate,g2.goods_type_name cname,g2.parent_id cpid,g2.update_time cupdate
+ FROM goods_type g1 , goods_type g2 WHERE g1.goods_type_id = g2.parent_id  and g2.`status`=1
+  </select>
+
+</mapper>
