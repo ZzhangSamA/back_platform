@@ -29,8 +29,8 @@
  <div class="sort_style">
   <div class="border clearfix">
        <span class="l_f">
-        <a href="javascript:ovid()"id="add_page" class="btn btn-warning" onclick="add_article_sort()"><i class="fa fa-plus"></i> 添加分类</a>
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
+        <a href="javascript:"id="add_page" class="btn btn-warning" onclick="add_article_sort()"><i class="fa fa-plus"></i> 添加分类</a>
+        <a href="javascript:" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
        </span>
        <span class="r_f">共：<b id="totalSort">0</b> 分类</span>
      </div>
@@ -41,7 +41,7 @@
 		 <tr>
 				<th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
 				<th width="80px">ID</th>
-                <th width="80px">排序</th>
+                <!--<th width="80px">排序</th>-->
 				<th width="150px">分类名称</th>
 				<th width="">简介</th>
 				<th width="150px">添加时间</th>
@@ -64,6 +64,21 @@
           </td>
          </tr>
         </tbody>
+         <tfoot>
+             <tr >
+                 <td colspan="7" align="center">
+                     <ul class="pagination" id="splitPage">
+                         <li class="disabled"><a href="#">上一页</a></li>
+                         <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                         <li><a href="#">2</a></li>
+                         <li><a href="#">3</a></li>
+                         <li><a href="#">4</a></li>
+                         <li><a href="#">5</a></li>
+                         <li><a href="#">下一页</a></li>
+                     </ul>
+                 </td>
+             </tr>
+         </tfoot>
         </table>
      </div>
  </div>
@@ -75,11 +90,11 @@
      <li class="clearfix Mandatory"><label class="label_name"><i>*</i>分类名称</label>
      <span class="formControls w_txt"><input name="分类名称" type="text" id="form-field-1" class="col-xs-7 col-sm-5 "></span>
      </li>
-     <li class="clearfix"><label class="label_name">排序</label>
-     <span class="formControls w_txt"><input name="排序" type="text" id="form-field-1" value="0" class="col-xs-7 col-sm-2 "></span>
-     </li>
+     <!--<li class="clearfix"><label class="label_name">排序</label>-->
+     <!--<span class="formControls w_txt"><input name="排序" type="text" id="form-field-1" value="0" class="col-xs-7 col-sm-2 "></span>-->
+     <!--</li>-->
      <li class="clearfix"><label class="label_name">简介</label>
-     <span class="formControls w_txt"><textarea name="权限描述" class="form-control" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span  style=" margin-left:10px;">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></span>
+     <span class="formControls w_txt"><textarea name="权限描述" class="form-control" id="form_textarea" placeholder="" ></textarea><span  style=" margin-left:10px;">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></span>
      </li>
     </ul>
  </div>
@@ -87,23 +102,23 @@
 </body>
 </html>
 <script>
-$(function() {
-  var oTable1 = $('#sample-table').dataTable( {
-  "aaSorting": [[ 1, "desc" ]],//默认第几个排序
-  "bStateSave": true,//状态保存
-  "aoColumnDefs": [
-	//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	{"orderable":false,"aTargets":[0,2,3,4,6,7,]}// 制定列不参与排序
-  ]});
-		  $('table th input:checkbox').on('click' , function(){
-			  var that = this;
-			  $(this).closest('table').find('tr > td:first-child input:checkbox')
-			  .each(function(){
-				 this.checked = that.checked;
-				 $(this).closest('tr').toggleClass('selected');
-	 });						
-  });
-})
+// $(function() {
+//   var oTable1 = $('#sample-table').dataTable( {
+//   "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+//   "bStateSave": true,//状态保存
+//   "aoColumnDefs": [
+// 	//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+// 	{"orderable":false,"aTargets":[0,2,3,4,6,7,]}// 制定列不参与排序
+//   ]});
+// 		  $('table th input:checkbox').on('click' , function(){
+// 			  var that = this;
+// 			  $(this).closest('table').find('tr > td:first-child input:checkbox')
+// 			  .each(function(){
+// 				 this.checked = that.checked;
+// 				 $(this).closest('tr').toggleClass('selected');
+// 	 });
+//   });
+// })
 /**添加分类**/
  function add_article_sort(index){	 
 	 layer.open({
@@ -131,6 +146,28 @@ $(function() {
 		 });
 		  if(num>0){  return false;}	 	
           else{
+              var name = document.getElementsByName("分类名称")[0].value;
+              // var rank = document.getElementsByName("排序")[0].value;
+              var desc = document.getElementsByName("权限描述")[0].value;
+              $.ajax({
+                  type:'POST',
+                  url:'addLabel',
+                  contentType:"application/json; charset=utf-8",
+                  data:JSON.stringify({
+                      "labelName":name,
+                      // "rank":rank,
+                      "labelDesc":desc
+                  }),
+                  success:function (response) {
+                      console.log(response);
+                  },
+                  error:function (response) {
+                      console.log(response);
+                  },
+                  dataType:'json'
+
+              });
+              initPage(1);
 			  layer.alert('添加成功！',{
                title: '提示框',				
 			icon:1,		
@@ -148,6 +185,7 @@ function member_del(obj,id){
 		layer.msg('已删除!',{icon:1,time:1000});
 	});
 }
+
 </script>
 
 <script>
@@ -169,8 +207,49 @@ function member_del(obj,id){
             success:function (response) {
                 console.log(response);
                 $("#labelTable").empty("");
+                $(response.blogLabelList).each(function (index, item) {
+                    $("#labelTable").append($("<tr>\n" +
+                        "          <td><label><input type=\"checkbox\" class=\"ace\"><span class=\"lbl\"></span></label></td>\n" +
+                        "          <td>"+item.labelId+"</td>\n" +
+                        // "          <td>"+item.rank+"</td>\n" +
+                        "          <td>"+item.labelName+"</td>\n" +
+                        "          <td class=\"displayPart\" displayLength=\"60\">"+item.labelDesc+"</td>\n" +
+                        "          <td>"+item.createTime+"</td>\n" +
+                        "          <td>启用</td>          \n" +
+                        "          <td class=\"td-manage\">   \n" +
+                        "           <a title=\"编辑\" onclick=\"member_edit('510')\" href=\"javascript:;\"  class=\"btn btn-xs btn-info\" ><i class=\"fa fa-edit bigger-120\"></i></a>      \n" +
+                        "           <a title=\"删除\" href=\"javascript:;\"  onclick=\"member_del(this,'1')\" class=\"btn btn-xs btn-danger\" ><i class=\"fa fa-trash  bigger-120\"></i></a>\n" +
+                        "          </td>\n" +
+                        "         </tr>"));
+                })
+                var page = response.page;
+                var str ="";
+                $("#splitPage").empty();
+                if(page.currentPage==1){
+                    str = "<li class=\"disabled\"><a href=\"#\" onclick='initPage("+(page.currentPage-1)+")'>上一页</a></li>";
+                }else{
+                    str = "<li><a href=\"#\" onclick='initPage("+(page.currentPage-1)+")'>上一页</a></li>";
+                }
+                for(var i=1;i<=page.pageCount;i++){
+                    if(i==page.currentPage){
+                        str += "<li class=\"active\"><a href=\"#\" onclick='initPage("+i+")'>"+i+"</a></li>"
+                    }else {
+                        str += "<li><a href=\"#\" onclick='initPage("+i+")'>"+i+"</a></li>"
 
-            }
+                    }
+                }
+                if(page.currentPage==page.pageCount){
+                    str += "<li class=\"disabled\"><a href=\"#\" onclick='initPage("+(page.currentPage+1)+")'>下一页</a></li>";
+                }else{
+                    str += "<li><a href=\"#\" onclick='initPage("+(page.currentPage+1)+")'>下一页</a></li>";
+                }
+                $("#splitPage").html(str);
+            },
+            error:function (response) {
+                console.log(response)
+            },
+            dataType:'json'
         })
     }
+    initPage(1);
 </script>

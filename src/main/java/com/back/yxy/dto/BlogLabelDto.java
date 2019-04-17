@@ -24,4 +24,12 @@ public class BlogLabelDto {
     public void setPage(Page page) {
         this.page = page;
     }
+
+    @Override
+    public String toString() {
+        return "BlogLabelDto{" +
+                "blogLabelList=" + blogLabelList +
+                ", page=" + page +
+                '}';
+    }
 }

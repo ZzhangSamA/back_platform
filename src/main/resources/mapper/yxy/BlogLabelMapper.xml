@@ -140,4 +140,8 @@
     select count(*) from blog_label
   </select>
 
+  <select id="getAllLabel" resultMap="BaseResultMap">
+    select * from blog_label where status=1
+  </select>
+
 </mapper>

@@ -1,9 +1,12 @@
 package com.back.yxy.controller;
 
+import com.back.yxy.dto.BlogLabelDto;
 import com.back.yxy.pojo.BlogLabel;
 import com.back.yxy.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class LabelController {
@@ -23,7 +26,18 @@ public class LabelController {
         if(blogLabel.getPage() != null) {
             blogLabel.getPage().setTotalCount(labelService.getTotalSort());
         }
-        return null;
+        BlogLabelDto blogLabelDto = new BlogLabelDto();
+        List<BlogLabel> allLabel = labelService.getAllLabel();
+        blogLabelDto.setBlogLabelList(allLabel);
+        blogLabelDto.setPage(blogLabel.getPage());
+        return blogLabelDto;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addLabel",method = RequestMethod.POST)
+    public int insertSelective(@RequestBody BlogLabel blogLabel) {
+        System.out.println(blogLabel);
+        return labelService.insertSelective(blogLabel);
     }
 
 }
