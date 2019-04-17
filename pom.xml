@@ -8,7 +8,7 @@
     <artifactId>back_platform</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
     <name>back_system</name>
     <description>back_system</description>
 
