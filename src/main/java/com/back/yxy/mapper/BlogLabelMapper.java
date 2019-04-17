@@ -50,4 +50,7 @@ public interface BlogLabelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(BlogLabel record);
+
+    public int getTotalSort();
+
 }

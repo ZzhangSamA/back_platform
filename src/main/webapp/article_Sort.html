@@ -32,7 +32,7 @@
         <a href="javascript:ovid()"id="add_page" class="btn btn-warning" onclick="add_article_sort()"><i class="fa fa-plus"></i> 添加分类</a>
         <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
        </span>
-       <span class="r_f">共：<b id="totalSort">5</b> 分类</span>
+       <span class="r_f">共：<b id="totalSort">0</b> 分类</span>
      </div>
      <!--分类类表-->
      <div class="article_sort_list">
@@ -49,7 +49,7 @@
 				<th width="150px">操作</th>
 			</tr>
 		</thead>
-        <tbody>
+        <tbody id="labelTable">
          <tr>
           <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
           <td>1234</td>
@@ -61,45 +61,6 @@
           <td class="td-manage">   
            <a title="编辑" onclick="member_edit('510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
            <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-          <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="javascript:;"  onclick="member_del(this,'3')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-          <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="javascript:;"  onclick="member_del(this,'4')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-          <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="javascript:;"  onclick="member_del(this,'5')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
           </td>
          </tr>
         </tbody>
@@ -188,7 +149,28 @@ function member_del(obj,id){
 	});
 }
 </script>
+
 <script>
     var totalSort = document.getElementById("totalSort");
+    $.get("getTotalSort").done(function (data) {
+        totalSort.innerHTML = data;
+    })
+    function initPage(currentPage) {
+        $.ajax({
+            type:'POST',
+            url:'initPage',
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify({
+                "page":{
+                    "currentPage":currentPage,
+                    "pageSize":3
+                }
+            }),
+            success:function (response) {
+                console.log(response);
+                $("#labelTable").empty("");
 
+            }
+        })
+    }
 </script>

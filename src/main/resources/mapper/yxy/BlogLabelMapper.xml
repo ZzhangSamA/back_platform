@@ -135,4 +135,9 @@
       rank = #{rank,jdbcType=TINYINT}
     where label_id = #{labelId,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotalSort" resultType="int">
+    select count(*) from blog_label
+  </select>
+
 </mapper>
