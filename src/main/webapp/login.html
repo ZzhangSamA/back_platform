@@ -14,14 +14,26 @@
 		<!--[if lte IE 8]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="assets/layer/layer.js" ></script>
+		<![endif]-->
 		<script src="assets/js/ace-extra.min.js"></script>
 		<!--[if lt IE 9]>
 		<script src="assets/js/html5shiv.js"></script>
 		<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>        
-        <script src="assets/layer/layer.js" type="text/javascript"></script>
+
+		<!--引入jquery validation的支持-->
+		<script src="js/jquery.validate-1.13.1.js"></script>
 <title>登录</title>
+	<style>
+		#span{
+			margin-top: 50px;
+		}
+		#login_btn{
+			margin-right: 80px;
+			margin-top: 20px;
+		}
+	</style>
 </head>
 
 <body class="login-layout Reg_log_style">
@@ -52,34 +64,48 @@
 
 											<div class="login_icon"><img src="images/login.png" /></div>
 
-											<form class="">
-												<fieldset>
-										<ul>
-   <li class="frame_style form_error"><label class="user_icon"></label><input name="用户名" type="text"  id="username"/><i>用户名</i></li>
-   <li class="frame_style form_error"><label class="password_icon"></label><input name="密码" type="password"   id="userpwd"/><i>密码</i></li>
-   <li class="frame_style form_error"><label class="Codes_icon"></label><input name="验证码" type="text"   id="Codes_text"/><i>验证码</i><div class="Codes_region"></div></li>
-   
-  </ul>
-													<div class="space"></div>
+											<!--<form class="" id="myform">-->
+												<!--<fieldset>-->
+										<!--<ul>-->
+   <!--<li class="frame_style form_error"><label class="user_icon"></label><input name="用户名" type="text"  id="username" placeholder="请输入登录账号"/></li>-->
+   <!--<li class="frame_style form_error"><label class="password_icon"></label><input name="密码" type="password"   id="password" placeholder="请输入登录密码"/></li>-->
+											<!--&lt;!&ndash;<div class="drag">&ndash;&gt;-->
+												<!--&lt;!&ndash;<div class="bg"></div>&ndash;&gt;-->
+												<!--&lt;!&ndash;<div class="text" onselectstart="return false;">请拖动滑块解锁</div>&ndash;&gt;-->
+												<!--&lt;!&ndash;<div class="btndrag">&gt;&gt;</div>&ndash;&gt;-->
+											<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-													<div class="clearfix">
-														<label class="inline">
-															<input type="checkbox" class="ace">
-															<span class="lbl">保存密码</span>
-														</label>
+  <!--</ul>-->
+													<!--<div class="space"></div>-->
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary" id="login_btn">
-															<i class="icon-key"></i>
-															登录
-														</button>
-													</div>
+													<!--<div class="clearfix">-->
 
-													<div class="space-4"></div>
-												</fieldset>
+															<!--<input type="checkbox" class="ace">-->
+															<!--<span class="lbl"><font size="3">保存密码</font></span>-->
+
+
+														<!--<a class="width-35 pull-right btn btn-sm btn-primary" id="login_btn" onclick="dologin()">-->
+															<!--<i class="icon-key"></i>-->
+															<!--登录-->
+														<!--</a><br>-->
+														<!--<div id="href">-->
+														<!--<a href="reg.html" style="color: blue" ><font size="3">我要注册</font></a></div>-->
+													<!--</div>-->
+
+
+													<!--<div class="space-4"></div>-->
+												<!--</fieldset>-->
+											<!--</form>-->
+
+											<form id="myform">
+													<input type="text" name="username" id="username" placeholder="请输入登录账号" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"><br>
+													<input type="text" name="password" id="password" placeholder="请输入登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"><br>
+												<input type="checkbox" class="ace">
+												<span class="lbl"><font size="3">保存密码</font></span>
+												<input type="button" class="width-35 btn btn-sm btn-primary" value="登录" id="login_btn" onclick="dologin()">
 											</form>
-
 											<div class="social-or-login center">
-												<span class="bigger-110">通知</span>
+												<span class="bigger-110" id="span">通知</span>
 											</div>
 
 											<div class="social-login center">
@@ -98,54 +124,58 @@
 						</div>
                         </div>
                         <div class="loginbm">版权所有  2016  <a href="">南京思美软件系统有限公司</a> </div><strong></strong>
+
+<script>
+
+    function dologin() {
+        $.ajax({
+            type: 'POST',
+            url: 'loginCheck',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                "userName":$("#username").val(),
+                "password":$("#password").val()
+            }),
+            success: function(responseText){
+                console.log(responseText);
+                if(responseText==true){
+                    window.location.href = "index.html";
+                }else {
+                    alert("用户名或密码错误");
+                }
+            },
+            error: function (message) {
+                console.log(message);
+            },
+            dataType: 'json'
+        });
+    }
+
+
+    $("#myform").validate({
+        rules:{
+            username:{
+                required: true,
+                minlength: 2,
+                maxlength: 10
+            },
+            password:{
+                required: true,
+                minlength: 6,
+                maxlength: 16
+            }
+        },
+        messages:{
+            username:{
+                required:"请输入用户名",
+                minlength:"至少输入{0}个字符"
+            },
+            password:{
+                required:"请输入密码",
+                minlength:"至少输入{0}个字符"
+            }
+        }
+    })
+</script>
 </body>
 </html>
-<script>
-$('#login_btn').on('click', function(){
-	     var num=0;
-		 var str="";
-     $("input[type$='text'],input[type$='password']").each(function(n){
-          if($(this).val()=="")
-          {
-               
-			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
-                title: '提示框',				
-				icon:0,								
-          }); 
-		    num++;
-            return false;            
-          } 
-		 });
-		  if(num>0){  return false;}	 	
-          else{
-			  layer.alert('登录成功！',{
-               title: '提示框',				
-			   icon:1,		
-			  });
-	          location.href="index.html";
-			   layer.close(index);	
-		  }		  		     						
-		
-	});
-  $(document).ready(function(){
-	 $("input[type='text'],input[type='password']").blur(function(){
-        var $el = $(this);
-        var $parent = $el.parent();
-        $parent.attr('class','frame_style').removeClass(' form_error');
-        if($el.val()==''){
-            $parent.attr('class','frame_style').addClass(' form_error');
-        }
-    });
-	$("input[type='text'],input[type='password']").focus(function(){		
-		var $el = $(this);
-        var $parent = $el.parent();
-        $parent.attr('class','frame_style').removeClass(' form_errors');
-        if($el.val()==''){
-            $parent.attr('class','frame_style').addClass(' form_errors');
-        } else{
-			 $parent.attr('class','frame_style').removeClass(' form_errors');
-		}
-		});
-	  })
-
-</script>
