@@ -33,4 +33,8 @@ public class LabelServiceImpl implements LabelService {
     public int updateByPrimaryKeySelective(BlogLabel blogLabel) {
         return blogLabelMapper.updateByPrimaryKeySelective(blogLabel);
     }
+
+    public int batchDel(String[] ids) {
+        return blogLabelMapper.batchDel(ids);
+    }
 }

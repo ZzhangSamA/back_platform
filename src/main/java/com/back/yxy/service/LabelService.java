@@ -14,4 +14,6 @@ public interface LabelService {
 
     public int updateByPrimaryKeySelective(BlogLabel blogLabel);
 
+    public int batchDel(String[] ids);
+
 }

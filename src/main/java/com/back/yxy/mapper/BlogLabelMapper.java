@@ -57,4 +57,5 @@ public interface BlogLabelMapper {
 
     public List<BlogLabel> getAllLabel(BlogLabel blogLabel);
 
+    public int batchDel(String[] ids);
 }

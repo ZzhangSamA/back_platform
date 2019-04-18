@@ -6,6 +6,7 @@ import com.back.yxy.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -43,5 +44,11 @@ public class LabelController {
     @RequestMapping(value = "updateByPrimaryKeySelective",method = RequestMethod.POST)
     public int updateByPrimaryKeySelective(@RequestBody BlogLabel blogLabel) {
         return labelService.updateByPrimaryKeySelective(blogLabel);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "batchDel",method = RequestMethod.POST)
+    public int batchDel(@RequestBody String[] ids) {
+        return labelService.batchDel(ids);
     }
 }

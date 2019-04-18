@@ -150,4 +150,10 @@
         update blog_label set status=0 where label_id=#{id}
     </update>
 
+  <update id="batchDel">
+    update blog_label set status=0 where label_id in
+    <foreach collection="array" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
 </mapper>
