@@ -1,6 +1,7 @@
 package com.back.rsx.service.imp;
 
 import com.back.rsx.dto.GoodsTypeDto;
+import com.back.rsx.dto.GoodsTypeEcho;
 import com.back.rsx.mapper.GoodsTypeMapper;
 import com.back.rsx.pojo.GoodsInfo;
 import com.back.rsx.service.GoodsTypeService;
@@ -20,7 +21,7 @@ public class GoodsTypeServiceImp implements GoodsTypeService {
         return goodsTypeMapper.getAllGoodsType();
     }
 
-    public List<GoodsInfo> getAllGoodsTypeTest() {
+    public List<GoodsTypeEcho> getAllGoodsTypeTest() {
         return goodsTypeMapper.getAllGoodsTypeTest();
     }
 

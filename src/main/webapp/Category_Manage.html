@@ -75,7 +75,7 @@ $(function() {
 });
 </script>
 <script type="text/javascript">
-//初始化宽度、高度  
+//初始化宽度、高度
  $(".widget-box").height($(window).height()); 
  $(".page_right_style").width($(window).width()-220);
   //当文档窗口发生改变时 触发  
@@ -112,26 +112,39 @@ var setting = {
 		}
 	}
 };
+var zNodes = getDate();
 
-var zNodes =[
-	{ id:1, pId:0, name:"商城分类列表", open:true},
-	{ id:11, pId:1, name:"蔬菜水果"},
-	{ id:111, pId:11, name:"蔬菜"},
-	{ id:112, pId:11, name:"苹果"},
-	{ id:113, pId:11, name:"大蒜"},
-	{ id:114, pId:11, name:"白菜"},
-	{ id:115, pId:11, name:"青菜"},
-	{ id:12, pId:1, name:"手机数码"},
-	{ id:121, pId:12, name:"手机 "},
-	{ id:122, pId:12, name:"照相机 "},
-	{ id:13, pId:1, name:"电脑配件"},
-	{ id:131, pId:13, name:"手机 "},
-	{ id:122, pId:13, name:"照相机 "},
-	{ id:14, pId:1, name:"服装鞋帽"},
-	{ id:141, pId:14, name:"手机 "},
-	{ id:42, pId:14, name:"照相机 "},
-];
-		
+/* =[
+	{ "id":1, "pId":0, "name":"商城分类列表", "open":true},
+	{ "id":11, pId:1, name:"蔬菜水果"},
+	{ "id":111, pId:11, name:"蔬菜"},
+	{ "id":112, pId:11, name:"苹果"},
+	{ "id":113, pId:11, name:"大蒜"},
+	{ "id":114, pId:11, name:"白菜"},
+	{ "id":115, pId:11, name:"青菜"},
+	{ "id":12, pId:1, name:"手机数码"},
+	{ "id":121, pId:12, name:"手机 "},
+	{ "id":122, pId:12, name:"照相机 "},
+	{ "id":13, pId:1, name:"电脑配件"},
+	{ "id":131, pId:13, name:"手机 "},
+	{ "id":122, pId:13, name:"照相机 "},
+	{ "id":14, pId:1, name:"服装鞋帽"},
+	{ "id":141, pId:14, name:"手机 "},
+	{ "id":42, pId:14, name:"照相机 "},
+];*/
+/*[{ "id":1, "pId":0, "name":"商城分类列表", "open":true},
+    {"id":2,"pId":1,"name":"狗粮"},
+    {"id":3,"pId":2,"name":"鸡蛋"},
+    {"id":4,"pId":2,"name":"胡萝卜"},
+    {"id":5,"pId":2,"name":"大马哈哈鱼"},
+    {"id":6,"pId":2,"name":"葡萄糖"},
+    {"id":7,"pId":1,"name":"猫粮"},
+    {"id":9,"pId":7,"name":"鱼"},
+    {"id":10,"pId":7,"name":"鸡蛋"},
+    {"id":11,"pId":7,"name":"a"},
+  ]*/
+
+alert("3"+zNodes);
 var code;
 		
 function showCode(str) {
@@ -147,5 +160,35 @@ $(document).ready(function(){
 	demoIframe.bind("load", loadReady);
 	var zTree = $.fn.zTree.getZTreeObj("tree");
 	zTree.selectNode(zTree.getNodeByParam("id",'11'));
-});	
+});
+
+function getDate() {
+    var str;
+
+    $.ajax({
+
+        type: 'POST',
+        url: 'getAllGoodsTypeByStatus',
+        contentType: "application/json; charset=utf-8",
+        async:false,
+
+        success: function(responseText){
+            console.log(responseText);
+
+            jstring = JSON.stringify(responseText)
+            jstring="["+ jstring.replace("[","{ \"id\":1, \"pId\":0, \"name\":\"商城分类列表\", \"open\":true},");
+
+
+
+            str= JSON.parse(jstring);
+
+        },
+        error: function (message) {
+            console.log(message);
+        },
+        dataType: 'json'
+    });
+
+    return str;
+}
 </script>

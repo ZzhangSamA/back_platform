@@ -12,9 +12,23 @@ public class GoodsTypeController {
 
     @Autowired
     GoodsTypeService goodsTypeService;
+
+    /**
+     * 获取所有的商品类别
+     * @return
+     */
     @RequestMapping(value = "getAllGoodsType",method = RequestMethod.POST)
     public Object getAllGoodsType(){
         return goodsTypeService.getAllGoodsType();
+    }
+
+    /**
+     * 查询所有商品类别未分类
+     * @return
+     */
+    @RequestMapping(value = "getAllGoodsTypeByStatus",method = RequestMethod.POST)
+    public Object getAllGoodsTypeByStatus(){
+        return goodsTypeService.getAllGoodsTypeTest();
     }
 
 }
