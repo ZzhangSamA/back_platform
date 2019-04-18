@@ -20,9 +20,8 @@ public class LabelController {
     public int getTotalSort() {
         return labelService.getTotalSort();
     }
-
     @ResponseBody
-    @RequestMapping(value = "initPage",method = RequestMethod.POST)
+    @RequestMapping(value = "initLabelPage",method = RequestMethod.POST)
     public Object initPage(@RequestBody(required = false)BlogLabel blogLabel) {
         if(blogLabel.getPage() != null) {
             blogLabel.getPage().setTotalCount(labelService.getTotalSort());
@@ -50,5 +49,11 @@ public class LabelController {
     @RequestMapping(value = "batchDel",method = RequestMethod.POST)
     public int batchDel(@RequestBody String[] ids) {
         return labelService.batchDel(ids);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getLabelList",method = RequestMethod.GET)
+    public Object getAllLabel() {
+        return labelService.getLabelList();
     }
 }

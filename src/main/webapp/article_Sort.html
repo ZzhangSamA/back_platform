@@ -295,17 +295,18 @@ function member_del(obj,id){
 	});
 }
 
-
-    var totalSort = document.getElementById("totalSort");
+    /*获取总数量*/
     $.get("getTotalSort").done(function (data) {
+        var totalSort = document.getElementById("totalSort");
         totalSort.innerHTML = data;
     });
+    /*初始化数据表格*/
     function initPage(currentPage) {
         var searchtxt = document.getElementById("searchtxt").value;
         var searchTime = document.getElementById("searchTime").value;
         $.ajax({
             type:'POST',
-            url:'initPage',
+            url:'initLabelPage',
             contentType:"application/json; charset=utf-8",
             data:JSON.stringify({
                 "labelName":searchtxt,

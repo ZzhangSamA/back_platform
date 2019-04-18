@@ -1,6 +1,9 @@
 package com.back.yxy.mapper;
 
+import com.back.yxy.dto.ArticleDto;
 import com.back.yxy.pojo.BlogArticle;
+
+import java.util.List;
 
 public interface BlogArticleMapper {
     /**
@@ -58,4 +61,6 @@ public interface BlogArticleMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(BlogArticle record);
+
+    public List<ArticleDto> initArticlePage(BlogArticle blogArticle);
 }

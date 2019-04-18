@@ -143,7 +143,9 @@
   <select id="getAllLabel" resultMap="BaseResultMap" parameterType="com.back.yxy.pojo.BlogLabel">
     select * from blog_label where status=1 and
     (label_name like(#{labelName}) or label_desc like(#{labelDesc})) and create_time like(#{createTime})
-        limit #{page.startPage},#{page.pageSize}
+        <if test="page != null">
+          limit #{page.startPage},#{page.pageSize}
+        </if>
   </select>
 
     <update id="deleteLabel" parameterType="int">
@@ -156,4 +158,9 @@
       #{id}
     </foreach>
   </update>
+
+  <select id="getLabelList" resultMap="BaseResultMap">
+    select * from blog_label where status=1
+  </select>
+
 </mapper>

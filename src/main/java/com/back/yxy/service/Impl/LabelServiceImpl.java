@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class LabelServiceImpl implements LabelService {
 
-    @Autowired(required = false)
+    @Autowired
     BlogLabelMapper blogLabelMapper;
 
     public int getTotalSort() {
@@ -19,9 +19,15 @@ public class LabelServiceImpl implements LabelService {
     }
 
     public List<BlogLabel> getAllLabel(BlogLabel blogLabel) {
-        blogLabel.setCreateTime("%"+blogLabel.getCreateTime()+"%");
-        blogLabel.setLabelDesc("%"+blogLabel.getLabelDesc()+"%");
-        blogLabel.setLabelName("%"+blogLabel.getLabelName()+"%");
+        if(blogLabel == null) {
+            blogLabel.setCreateTime("%%");
+            blogLabel.setLabelDesc("%%");
+            blogLabel.setLabelName("%%");
+        }else {
+            blogLabel.setCreateTime("%" + blogLabel.getCreateTime() + "%");
+            blogLabel.setLabelDesc("%" + blogLabel.getLabelDesc() + "%");
+            blogLabel.setLabelName("%" + blogLabel.getLabelName() + "%");
+        }
         return blogLabelMapper.getAllLabel(blogLabel);
     }
 
@@ -37,4 +43,10 @@ public class LabelServiceImpl implements LabelService {
     public int batchDel(String[] ids) {
         return blogLabelMapper.batchDel(ids);
     }
+
+    public List<BlogLabel> getLabelList() {
+        return blogLabelMapper.getLabelList();
+    }
+
+
 }
