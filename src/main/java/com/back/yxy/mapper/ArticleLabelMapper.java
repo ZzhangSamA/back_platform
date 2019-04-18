@@ -50,4 +50,7 @@ public interface ArticleLabelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(ArticleLabel record);
+
+    public int getCountByLabelId(ArticleLabel articleLabel);
+
 }

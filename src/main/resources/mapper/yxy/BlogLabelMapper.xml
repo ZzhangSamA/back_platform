@@ -135,4 +135,32 @@
       rank = #{rank,jdbcType=TINYINT}
     where label_id = #{labelId,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotalSort" resultType="int">
+    select count(*) from blog_label where status=1
+  </select>
+
+  <select id="getAllLabel" resultMap="BaseResultMap" parameterType="com.back.yxy.pojo.BlogLabel">
+    select * from blog_label where status=1 and
+    (label_name like(#{labelName}) or label_desc like(#{labelDesc})) and create_time like(#{createTime})
+        <if test="page != null">
+          limit #{page.startPage},#{page.pageSize}
+        </if>
+  </select>
+
+    <update id="deleteLabel" parameterType="int">
+        update blog_label set status=0 where label_id=#{id}
+    </update>
+
+  <update id="batchDel">
+    update blog_label set status=0 where label_id in
+    <foreach collection="array" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
+
+  <select id="getLabelList" resultMap="BaseResultMap">
+    select * from blog_label where status=1
+  </select>
+
 </mapper>

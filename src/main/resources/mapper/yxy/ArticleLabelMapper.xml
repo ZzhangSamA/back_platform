@@ -111,4 +111,13 @@
       status = #{status,jdbcType=BIT}
     where al_id = #{alId,jdbcType=INTEGER}
   </update>
+
+  <select id="getCountByLabelId" parameterType="com.back.yxy.pojo.ArticleLabel" resultType="int">
+    select count(*) from article_label
+    <where >
+      <if test="labelId != null and labelId != 0">
+        label_id=#{labelId}
+      </if>
+    </where>
+  </select>
 </mapper>

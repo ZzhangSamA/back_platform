@@ -17,7 +17,6 @@ public class Brand {
 
     private Integer supplierId;
 
-    private Boolean status;
 
     public Integer getBrandId() {
         return brandId;
@@ -75,11 +74,5 @@ public class Brand {
         this.supplierId = supplierId;
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
 }

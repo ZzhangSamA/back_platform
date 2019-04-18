@@ -12,5 +12,4 @@
     <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
 
-
 </mapper>

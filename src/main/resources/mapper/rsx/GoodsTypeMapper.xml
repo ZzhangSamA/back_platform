@@ -29,5 +29,10 @@
     SELECT g1.*,g2.goods_type_id cid,g2.create_time ccreate,g2.goods_type_name cname,g2.parent_id cpid,g2.update_time cupdate
  FROM goods_type g1 , goods_type g2 WHERE g1.goods_type_id = g2.parent_id  and g2.`status`=1
   </select>
+  <select id="getAllGoodsTypeTest" resultType="com.back.rsx.dto.GoodsTypeEcho">
+    SELECT goods_type_id id,parent_id pId,goods_type_name name FROM goods_type where `status`=1
+  </select>
+
+
 
 </mapper>

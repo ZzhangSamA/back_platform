@@ -1,18 +1,17 @@
-package com.back.rsx.pojo;
+package com.back.rsx.vo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GoodsType {
+public class GoodsTypeVo {
     private Integer goodsTypeId;
 
     private String goodsTypeName;
 
     private Integer parentId;
 
-    private String createTime;
+    private Date createTime;
 
-    private String updateTime;
+    private Date updateTime;
 
     private Boolean status;
 
@@ -40,45 +39,22 @@ public class GoodsType {
         this.parentId = parentId;
     }
 
-    public String getCreateTime() {
-
+    public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
-        if(createTime==null){
-            this.createTime = null;
-            return;
-        }
-        String dateStr = "";
-        try{
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            dateStr = sdf.format(createTime);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        this.createTime = dateStr;
+        this.createTime = createTime;
     }
-    public String getUpdateTime() {
+
+    public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
-        if(updateTime==null){
-            this.updateTime = null;
-            return;
-        }
-        String dateStr = "";
-        try{
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            dateStr = sdf.format(updateTime);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        this.updateTime = dateStr;
+        this.updateTime = updateTime;
     }
+
     public Boolean getStatus() {
         return status;
     }

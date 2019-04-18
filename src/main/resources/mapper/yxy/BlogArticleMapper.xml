@@ -174,4 +174,14 @@
       status = #{status,jdbcType=BIT}
     where article_id = #{articleId,jdbcType=INTEGER}
   </update>
+
+
+  <select id="initArticlePage" parameterType="com.back.yxy.pojo.BlogArticle" resultType="com.back.yxy.dto.ArticleDto">
+    SELECT ba.*,u.user_name,bl.label_name
+    from blog_article ba LEFT JOIN user u on ba.user_id=u.user_id
+    LEFT JOIN article_label al on al.article_id=ba.article_id
+    LEFT JOIN blog_label bl on bl.label_id=al.label_id
+    and ba.`status`=1 and u.`status`=1 and al.`status`=1 and bl.`status`=1
+  </select>
+
 </mapper>

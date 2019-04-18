@@ -1,10 +1,13 @@
 package com.back.rsx.service;
 
 import com.back.rsx.dto.GoodsTypeDto;
-import org.springframework.stereotype.Service;
+import com.back.rsx.dto.GoodsTypeEcho;
+import com.back.rsx.pojo.GoodsInfo;
 
 import java.util.List;
 
 public interface GoodsTypeService {
     List<GoodsTypeDto> getAllGoodsType();
+    List<GoodsTypeEcho> getAllGoodsTypeTest();
+
 }
