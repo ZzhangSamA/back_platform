@@ -27,7 +27,7 @@ public class LabelController {
             blogLabel.getPage().setTotalCount(labelService.getTotalSort());
         }
         BlogLabelDto blogLabelDto = new BlogLabelDto();
-        List<BlogLabel> allLabel = labelService.getAllLabel();
+        List<BlogLabel> allLabel = labelService.getAllLabel(blogLabel);
         blogLabelDto.setBlogLabelList(allLabel);
         blogLabelDto.setPage(blogLabel.getPage());
         return blogLabelDto;
@@ -36,8 +36,12 @@ public class LabelController {
     @ResponseBody
     @RequestMapping(value = "addLabel",method = RequestMethod.POST)
     public int insertSelective(@RequestBody BlogLabel blogLabel) {
-        System.out.println(blogLabel);
         return labelService.insertSelective(blogLabel);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "updateByPrimaryKeySelective",method = RequestMethod.POST)
+    public int updateByPrimaryKeySelective(@RequestBody BlogLabel blogLabel) {
+        return labelService.updateByPrimaryKeySelective(blogLabel);
+    }
 }

@@ -8,7 +8,10 @@ public interface LabelService {
 
     public int getTotalSort();
 
-    public List<BlogLabel> getAllLabel();
+    public List<BlogLabel> getAllLabel(BlogLabel blogLabel);
 
     public int insertSelective(BlogLabel blogLabel);
+
+    public int updateByPrimaryKeySelective(BlogLabel blogLabel);
+
 }

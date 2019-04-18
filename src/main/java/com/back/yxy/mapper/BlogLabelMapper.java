@@ -55,6 +55,6 @@ public interface BlogLabelMapper {
 
     public int getTotalSort();
 
-    public List<BlogLabel> getAllLabel();
+    public List<BlogLabel> getAllLabel(BlogLabel blogLabel);
 
 }

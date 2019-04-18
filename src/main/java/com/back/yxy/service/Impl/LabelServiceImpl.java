@@ -18,11 +18,19 @@ public class LabelServiceImpl implements LabelService {
         return blogLabelMapper.getTotalSort();
     }
 
-    public List<BlogLabel> getAllLabel() {
-        return blogLabelMapper.getAllLabel();
+    public List<BlogLabel> getAllLabel(BlogLabel blogLabel) {
+        blogLabel.setCreateTime("%"+blogLabel.getCreateTime()+"%");
+        blogLabel.setLabelDesc("%"+blogLabel.getLabelDesc()+"%");
+        blogLabel.setLabelName("%"+blogLabel.getLabelName()+"%");
+        return blogLabelMapper.getAllLabel(blogLabel);
     }
 
     public int insertSelective(BlogLabel blogLabel) {
+
         return blogLabelMapper.insertSelective(blogLabel);
+    }
+
+    public int updateByPrimaryKeySelective(BlogLabel blogLabel) {
+        return blogLabelMapper.updateByPrimaryKeySelective(blogLabel);
     }
 }
