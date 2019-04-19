@@ -16,7 +16,10 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
-    public User loginCheck(User user) {
-        return this.userMapper.loginCheck(user);
+    public boolean loginCheck(User user) {
+        if(this.userMapper.loginCheck(user)!=null){
+            return true;
+        }
+        return false;
     }
 }
