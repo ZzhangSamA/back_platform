@@ -10,4 +10,7 @@
     <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
 
+  <select id="getAllSupplier" resultMap="BaseResultMap">
+    SELECT * FROM supplier WHERE `status` = 1
+  </select>
 </mapper>

@@ -4,12 +4,71 @@
   <resultMap id="BaseResultMap" type="com.back.rsx.pojo.Brand">
     <id column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
-    <result column="brand_number" jdbcType="INTEGER" property="brandNumber" />
+    <result column="brand_number" jdbcType="VARCHAR" property="brandNumber" />
     <result column="brand_icon" jdbcType="VARCHAR" property="brandIcon" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="supplier_id" jdbcType="INTEGER" property="supplierId" />
-    <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
+  <select id="getAllBrand" resultMap="BaseResultMap" >
+    select * from brand where status = 1
+  </select>
+  <select id="getBrandPageBy" parameterType="com.back.rsx.vo.BrandVo" resultMap="BaseResultMap">
+     select * from brand where status = 1
+     <if test="createTime != null and createTime!=''">
+       and create_time like concat(#{createTime},'%')
+     </if>
+    <if test="brandName !=null and brandName != ''">
+       and brand_name = #{brandName}
+    </if>
+    limit #{splitePageBean.start},#{splitePageBean.pageSize}
+  </select>
+  <select id="getCount" resultType="int" parameterType="com.back.rsx.vo.BrandVo">
+     select count(*) from brand where status = 1
+     <if test="createTime != null and createTime!=''">
+       and create_time like concat(#{createTime},'%')
+     </if>
+    <if test="brandName !=null and brandName != ''">
+       and brand_name = #{brandName}
+    </if>
+  </select>
+    <update id="deleteBrandById" parameterType="com.back.rsx.pojo.Brand">
+        update brand set status = 0 ,update_time = now() where brand_id =#{brandId}
+    </update>
 
+    <update id="deleteBySel" parameterType="map">
+        update brand set status=0 ,update_time = now()  where brand_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <insert id="addBrand" parameterType="com.back.rsx.pojo.Brand">
+        insert into brand values
+         (default ,#{brandName},#{brandNumber},#{brandIcon},
+          default ,null,#{supplierId} ,1)
+    </insert>
+    <select id="getBrandById" parameterType="com.back.rsx.pojo.Brand" resultMap="BaseResultMap">
+        select * from brand where brand_id=#{brandId}
+    </select>
+    <update id="updateBrandById" parameterType="com.back.rsx.pojo.Brand">
+        update brand
+        <set>
+            <if test="brandName !=null and brandName !=''">
+                brand_name = #{brandName},
+            </if>
+            <if test="supplierId !=null and supplierId !=''">
+                supplier_id = #{supplierId},
+            </if>
+            <if test="brandIcon!=null and brandIcon!=''">
+                brand_icon = #{brandIcon},
+            </if>
+            <if test="brandNumber!=null and brandNumber!=''">
+                brand_number = #{brandNumber},
+            </if>
+            <if test="true">
+                update_time = now()
+            </if>
+        </set>
+        where brand_id = #{brandId}
+    </update>
 </mapper>

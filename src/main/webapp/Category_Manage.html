@@ -106,7 +106,8 @@ var setting = {
 				zTree.expandNode(treeNode);
 				return false;
 			} else {
-				demoIframe.attr("src",treeNode.file + ".html");
+
+				demoIframe.attr("src",  "product-category-add.html?systemId="+treeNode.id);
 				return true;
 			}
 		}
@@ -144,7 +145,7 @@ var zNodes = getDate();
     {"id":11,"pId":7,"name":"a"},
   ]*/
 
-alert("3"+zNodes);
+
 var code;
 		
 function showCode(str) {
@@ -156,6 +157,7 @@ function showCode(str) {
 $(document).ready(function(){
 	var t = $("#treeDemo");
 	t = $.fn.zTree.init(t, setting, zNodes);
+	t.expandAll(true);
 	demoIframe = $("#testIframe");
 	demoIframe.bind("load", loadReady);
 	var zTree = $.fn.zTree.getZTreeObj("tree");
@@ -168,7 +170,7 @@ function getDate() {
     $.ajax({
 
         type: 'POST',
-        url: 'getAllGoodsTypeByStatus',
+        url: 'getAllGoodsTypeBy',
         contentType: "application/json; charset=utf-8",
         async:false,
 

@@ -20,15 +20,149 @@
 	    <script src="js/jquery-1.9.1.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
 <title>添加产品分类</title>
+    <script type="text/javascript">
+        
+
+        $(function () {
+            addParentid();
+            var goodtypeid = window.location.search.split("=")[1];
+            if (typeof(goodtypeid) != "undefined") {
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'getAllGoodsTypeBy',
+                    contentType: "application/json; charset=utf-8",
+                    async:false,
+                    data: JSON.stringify({
+                        "goodsTypeId":goodtypeid
+                    }),
+                    success: function(responseText){
+                        console.log(responseText);
+                        $("#user-name").val(responseText[0].name);
+                        $("#parentId").val(responseText[0].pId);
+
+
+
+                    },
+                    error: function (message) {
+                        console.log(message);
+                    },
+                    dataType: 'json'
+                });
+            }
+
+
+
+        });
+        
+       function addParentid() {
+           $.ajax({
+
+               type: 'POST',
+               url: 'getAllGoodsTypeBy',
+               contentType: "application/json; charset=utf-8",
+               async:false,
+               data: JSON.stringify({
+                   "parentId":1
+               }),
+               success: function(responseText){
+                   console.log(responseText);
+
+                   $(responseText).each(function (index,item) {
+                       $('#parentId').append('<option value="' + item.id + '">' + item.name + '</option>');
+
+                   });
+
+
+               },
+               error: function (message) {
+                   console.log(message);
+               },
+               dataType: 'json'
+           });
+       }
+
+        function ModifyType() {
+            var goodtypeid = window.location.search.split("=")[1];
+            if (typeof(goodtypeid) == "undefined") {
+                alert("你还没选择商品类型哦！")
+
+            }else if ($("#parentId").val()==1){
+                alert('该版本不支持添加父类哦！');
+            }else if (!$("#user-name").val()) {
+                alert("你的类型名为空哦，请填写");
+            }
+            else {
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'updateGoodsTypeById',
+                    contentType: "application/json; charset=utf-8",
+                    async:false,
+                    data: JSON.stringify({
+                        "parentId":$("#parentId").val(),
+                        "goodsTypeId":goodtypeid,
+                        "goodsTypeName": $("#user-name").val()
+                    }),
+                    success: function(responseText){
+
+                        if (responseText==1){
+                            alert("修改成功");
+                        } else {
+                            alert("服务器内部出错");
+                        }
+                        parent.location.reload();
+                    },
+                    error: function (message) {
+                        console.log(message);
+
+                    },
+                    dataType: 'json'
+                });
+            }
+
+        }
+        function deleteGoodsTypeById() {
+            var goodtypeid = window.location.search.split("=")[1];
+            if (typeof(goodtypeid) != "undefined") {
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'deleteGoodsTypeById',
+                    contentType: "application/json; charset=utf-8",
+                    async:false,
+                    data: JSON.stringify({
+                        "goodsTypeId":goodtypeid,
+                    }),
+                    success: function(responseText){
+
+                        if (responseText==1){
+                            alert("删除成功");
+                        } else {
+                            alert("服务器内部出错");
+                        }
+                        parent.location.reload();
+                    },
+                    error: function (message) {
+                        console.log(message);
+
+                    },
+                    dataType: 'json'
+                });
+            }else {
+                alert("你还没选择商品类型哦！")
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="type_style">
  <div class="type_title">产品类型信息</div>
   <div class="type_content">
   <div class="Operate_btn">
-  <a href="javascript:ovid()" class="btn  btn-warning"><i class="icon-edit align-top bigger-125"></i>新增子类型</a>
-  <a href="javascript:ovid()" class="btn  btn-success"><i class="icon-ok align-top bigger-125"></i>禁用该类型</a>
-  <a href="javascript:ovid()" class="btn  btn-danger"><i class="icon-trash   align-top bigger-125"></i>删除该类型</a>
+  <a href="goodstypeadd.html" class="btn  btn-warning"><i class="icon-edit align-top bigger-125"></i>新增子类型</a>
+  <!--<a href="javascript:ovid()" class="btn  btn-success"><i class="icon-ok align-top bigger-125"></i>禁用该类型</a>-->
+  <a href="javascript:ovid()" class="btn  btn-danger" onclick="deleteGoodsTypeById()"><i class="icon-trash   align-top bigger-125"></i>删除该类型</a>
   </div>
   <form action="" method="post" class="form form-horizontal" id="form-user-add">
     <div class="Operate_cont clearfix">
@@ -38,21 +172,22 @@
       </div>
     </div>
         <div class="Operate_cont clearfix">
-      <label class="form-label"><span class="c-red">*</span>排序：</label>
-      <div class="formControls ">
-        <input type="text" class="input-text" value="" placeholder="" id="user-name" name="product-category-name">
-      </div>
-    </div>
-    <div class="Operate_cont clearfix">
+      <label class="form-label"><span class="c-red">*</span>父类别：</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <select id="parentId">
+            </select>
+
+        </div>
+<!--    <div class="Operate_cont clearfix">
     <label class="form-label">备注：</label>
     <div class="formControls">
     <textarea name="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,100)"></textarea>
      <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
     </div>
-    </div>
+    </div>-->
     <div class="">
      <div class="" style=" text-align:center">
-      <input class="btn btn-primary radius" type="submit" value="提交">
+      <input class="btn btn-primary radius" type="submit" value="修改" onclick="ModifyType()">
       </div>
     </div>
   </form>
