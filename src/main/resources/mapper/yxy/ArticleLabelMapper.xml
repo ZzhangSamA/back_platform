@@ -113,11 +113,21 @@
   </update>
 
   <select id="getCountByLabelId" parameterType="com.back.yxy.pojo.ArticleLabel" resultType="int">
-    select count(*) from article_label
-    <where >
+    SELECT count(*) from (select DISTINCT article_id from article_label
+    where status = 1
       <if test="labelId != null and labelId != 0">
-        label_id=#{labelId}
+        and label_id=#{labelId}
       </if>
-    </where>
+
+    ) t
   </select>
+
+  <update id="deleteArticleLabel" parameterType="com.back.yxy.pojo.BlogArticle">
+    update article_label set status=0 where article_id=#{articleId}
+  </update>
+
+  <select id="getLabelIdByArticleId" parameterType="com.back.yxy.pojo.ArticleLabel" resultMap="BaseResultMap">
+    select * from article_label where article_id = #{articleId}
+  </select>
+
 </mapper>

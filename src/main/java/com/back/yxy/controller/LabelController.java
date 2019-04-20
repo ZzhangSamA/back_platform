@@ -18,13 +18,13 @@ public class LabelController {
     @ResponseBody
     @RequestMapping(value = "getTotalSort",method = RequestMethod.GET)
     public int getTotalSort() {
-        return labelService.getTotalSort();
+        return labelService.getTotalSort(new BlogLabel());
     }
     @ResponseBody
     @RequestMapping(value = "initLabelPage",method = RequestMethod.POST)
     public Object initPage(@RequestBody(required = false)BlogLabel blogLabel) {
         if(blogLabel.getPage() != null) {
-            blogLabel.getPage().setTotalCount(labelService.getTotalSort());
+            blogLabel.getPage().setTotalCount(labelService.getTotalSort(blogLabel));
         }
         BlogLabelDto blogLabelDto = new BlogLabelDto();
         List<BlogLabel> allLabel = labelService.getAllLabel(blogLabel);
@@ -40,7 +40,7 @@ public class LabelController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateByPrimaryKeySelective",method = RequestMethod.POST)
+    @RequestMapping(value = "updateLabelByPrimaryKeySelective",method = RequestMethod.POST)
     public int updateByPrimaryKeySelective(@RequestBody BlogLabel blogLabel) {
         return labelService.updateByPrimaryKeySelective(blogLabel);
     }

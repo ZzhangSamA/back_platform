@@ -229,7 +229,7 @@ function labelEdit(name,desc,id){
                 var desc = document.getElementsByName("editDesc")[0].value;
                 $.ajax({
                     type:'POST',
-                    url:'updateByPrimaryKeySelective',
+                    url:'updateLabelByPrimaryKeySelective',
                     contentType:"application/json; charset=utf-8",
                     data:JSON.stringify({
                         "labelName":name,
@@ -269,7 +269,7 @@ function member_del(obj,id){
 
 		$.ajax({
            type:'POST',
-           url:'updateByPrimaryKeySelective',
+           url:'updateLabelByPrimaryKeySelective',
            contentType:"application/json; charset=utf-8",
             data:JSON.stringify({
                 "labelId":id,
@@ -319,7 +319,7 @@ function member_del(obj,id){
             }),
             success:function (response) {
                 console.log(response);
-                $("#labelTable").empty("");
+                $("#labelTable").empty();
                 $(response.blogLabelList).each(function (index, item) {
                     $("#labelTable").append($("<tr>\n" +
                         "          <td><label><input type=\"checkbox\" class=\"ace ids\" value='"+item.labelId+"' onclick='chooseOne(this)'><span class=\"lbl\"></span></label></td>\n" +

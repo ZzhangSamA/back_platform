@@ -55,4 +55,16 @@ public class ArticleDto {
     public void setLabel_name(String label_name) {
         this.label_name = label_name;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleDto{" +
+                "article_id=" + article_id +
+                ", article_title='" + article_title + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", update_time='" + update_time + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", label_name='" + label_name + '\'' +
+                '}';
+    }
 }

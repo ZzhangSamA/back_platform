@@ -1,6 +1,9 @@
 package com.back.yxy.mapper;
 
 import com.back.yxy.pojo.ArticleLabel;
+import com.back.yxy.pojo.BlogArticle;
+
+import java.util.List;
 
 public interface ArticleLabelMapper {
     /**
@@ -52,5 +55,9 @@ public interface ArticleLabelMapper {
     int updateByPrimaryKey(ArticleLabel record);
 
     public int getCountByLabelId(ArticleLabel articleLabel);
+
+    public int deleteArticleLabel(BlogArticle blogArticle);
+
+    public List<ArticleLabel> getLabelIdByArticleId(ArticleLabel articleLabel);
 
 }

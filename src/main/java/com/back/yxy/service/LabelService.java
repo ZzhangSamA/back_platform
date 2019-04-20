@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LabelService {
 
-    public int getTotalSort();
+    public int getTotalSort(BlogLabel blogLabel);
 
     public List<BlogLabel> getAllLabel(BlogLabel blogLabel);
 

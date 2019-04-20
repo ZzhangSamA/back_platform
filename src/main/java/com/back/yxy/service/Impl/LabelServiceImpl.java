@@ -14,18 +14,39 @@ public class LabelServiceImpl implements LabelService {
     @Autowired
     BlogLabelMapper blogLabelMapper;
 
-    public int getTotalSort() {
-        return blogLabelMapper.getTotalSort();
+    public int getTotalSort(BlogLabel blogLabel) {
+        if(blogLabel.getCreateTime() == null) {
+            blogLabel.setCreateTime("%%");
+        }else {
+            blogLabel.setCreateTime("%" + blogLabel.getCreateTime() + "%");
+        }
+        if(blogLabel.getLabelDesc() == null) {
+            blogLabel.setLabelDesc("%%");
+        } else{
+            blogLabel.setLabelDesc("%" + blogLabel.getLabelDesc() + "%");
+        }
+        if(blogLabel.getLabelName() == null) {
+            blogLabel.setLabelName("%%");
+        } else {
+            blogLabel.setLabelName("%" + blogLabel.getLabelName() + "%");
+        }
+        return blogLabelMapper.getTotalSort(blogLabel);
     }
 
     public List<BlogLabel> getAllLabel(BlogLabel blogLabel) {
-        if(blogLabel == null) {
+        if(blogLabel.getCreateTime() == null) {
             blogLabel.setCreateTime("%%");
-            blogLabel.setLabelDesc("%%");
-            blogLabel.setLabelName("%%");
         }else {
             blogLabel.setCreateTime("%" + blogLabel.getCreateTime() + "%");
+        }
+        if(blogLabel.getLabelDesc() == null) {
+            blogLabel.setLabelDesc("%%");
+        } else{
             blogLabel.setLabelDesc("%" + blogLabel.getLabelDesc() + "%");
+        }
+        if(blogLabel.getLabelName() == null) {
+            blogLabel.setLabelName("%%");
+        } else {
             blogLabel.setLabelName("%" + blogLabel.getLabelName() + "%");
         }
         return blogLabelMapper.getAllLabel(blogLabel);
