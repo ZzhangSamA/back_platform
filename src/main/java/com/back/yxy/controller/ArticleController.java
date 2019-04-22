@@ -123,7 +123,7 @@ public class ArticleController {
             return;
         }
         String pic = UUID.randomUUID()+"_"+file.getOriginalFilename();
-        String path="D:\\Java\\homework\\三阶段项目\\back_platform\\src\\main\\webapp\\images\\cover\\"+pic;
+        String path="D:\\Java\\homework\\三阶段项目\\back_platform\\target\\back_platform-1.0-SNAPSHOT\\images\\cover\\"+pic;
         File newFile=new File(path);
         file.transferTo(newFile);
         String articleId = request.getParameter("articleId");
