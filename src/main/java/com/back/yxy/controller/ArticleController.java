@@ -116,21 +116,55 @@ public class ArticleController {
         return articleService.updateArticle(blogArticle).toString();
     }
 
+    static String COVER_PATH = "/static/cover/";
     @RequestMapping("fileUpload")
-    public void fileUpload (@RequestParam("uploadFile") CommonsMultipartFile file, HttpServletResponse response,HttpServletRequest request) throws IOException {
-        if(file.getOriginalFilename()=="") {
+    public void fileUpload (@RequestParam("uploadFile") CommonsMultipartFile CMFile, HttpServletResponse response,HttpServletRequest request) throws IOException {
+        if(CMFile.getOriginalFilename()=="") {
             response.sendRedirect("article_list.html");
             return;
         }
-        String pic = UUID.randomUUID()+"_"+file.getOriginalFilename();
-        String path="D:\\Java\\homework\\三阶段项目\\back_platform\\target\\back_platform-1.0-SNAPSHOT\\images\\cover\\"+pic;
-        File newFile=new File(path);
-        file.transferTo(newFile);
+        // 获取文件后缀
+        String fileName = CMFile.getOriginalFilename();
+        String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
+
+        // 文件存放路径
+        String filePath = request.getSession().getServletContext().getRealPath(COVER_PATH);
+        System.out.println(filePath);
+        InetAddress ia=null;
+        try {
+            ia = ia.getLocalHost();
+            System.out.println(ia.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        // 判断路径是否存在，不存在则创建文件夹
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        // 将文件写入目标
+        file = new File(filePath, UUID.randomUUID() + fileSuffix);
+        try {
+            CMFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 获取服务端路径
+        String picPath = String.format("%s://%s:%s%s%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), COVER_PATH);
+        String pic = picPath+file.getName();
+        System.out.println(pic);
+
+
+        //更新数据库
         String articleId = request.getParameter("articleId");
         BlogArticle blogArticle = new BlogArticle();
         blogArticle.setArticleId(Integer.parseInt(articleId));
         blogArticle.setArticle_pic(pic);
         articleService.updatePicByArticleId(blogArticle);
+
         response.sendRedirect("article_list.html");
     }
 }

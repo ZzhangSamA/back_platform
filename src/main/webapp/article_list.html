@@ -284,7 +284,7 @@ function member_del(obj,id){
                         "          <td><label><input type=\"checkbox\" class=\"ace ids\" value='"+item.article_id+"' onclick='chooseOne(this)'><span class=\"lbl\"></span></label></td>\n" +
                         "          <td>"+item.article_id+"</td>\n" +
                         "          <td>"+item.user_name+"</td>\n" +
-                        (item.article_pic == null?"<td><button onclick='upload_article_pic("+item.article_id+")'>上传封面</button></td>":"<td><a href='#'><img src=\"images/cover/"+item.article_pic+"\" style=\"width: 120px;height: 90px;\" align=\"middle\" onclick='upload_article_pic("+item.article_id+")'/></a></td>") +
+                        (item.article_pic == null?"<td><button onclick='upload_article_pic("+item.article_id+")'>上传封面</button></td>":"<td><a href='#'><img src=\""+item.article_pic+"\" style=\"width: 120px;height: 90px;\" align=\"middle\" onclick='upload_article_pic("+item.article_id+")'/></a></td>") +
                         "          <td>"+item.article_title+"</td>\n" +
                         "          <td>"+item.label_name+"</td>\n" +
                         "          <td>"+item.create_time+"</td>\n" +
