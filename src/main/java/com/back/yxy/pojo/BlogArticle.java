@@ -65,6 +65,16 @@ public class BlogArticle {
 
     private String[] ids;
 
+    private String article_pic;
+
+    public String getArticle_pic() {
+        return article_pic;
+    }
+
+    public void setArticle_pic(String article_pic) {
+        this.article_pic = article_pic;
+    }
+
     public String[] getIds() {
         return ids;
     }

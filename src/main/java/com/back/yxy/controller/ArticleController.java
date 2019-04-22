@@ -8,16 +8,15 @@ import com.back.yxy.vo.ArticleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class ArticleController {
@@ -115,5 +114,23 @@ public class ArticleController {
     @RequestMapping(value = "updateArticle",method = RequestMethod.POST)
     public String updateArticle(@RequestBody BlogArticle blogArticle) {
         return articleService.updateArticle(blogArticle).toString();
+    }
+
+    @RequestMapping("fileUpload")
+    public void fileUpload (@RequestParam("uploadFile") CommonsMultipartFile file, HttpServletResponse response,HttpServletRequest request) throws IOException {
+        if(file.getOriginalFilename()=="") {
+            response.sendRedirect("article_list.html");
+            return;
+        }
+        String pic = UUID.randomUUID()+"_"+file.getOriginalFilename();
+        String path="D:\\Java\\homework\\三阶段项目\\back_platform\\src\\main\\webapp\\images\\cover\\"+pic;
+        File newFile=new File(path);
+        file.transferTo(newFile);
+        String articleId = request.getParameter("articleId");
+        BlogArticle blogArticle = new BlogArticle();
+        blogArticle.setArticleId(Integer.parseInt(articleId));
+        blogArticle.setArticle_pic(pic);
+        articleService.updatePicByArticleId(blogArticle);
+        response.sendRedirect("article_list.html");
     }
 }

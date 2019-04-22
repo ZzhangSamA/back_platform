@@ -71,6 +71,7 @@
 				<th width="25"><label><input type="checkbox" id="chooseAll" class="ace"><span class="lbl"></span></label></th>
 				<th width="80px">ID</th>
              <th width="100px">发布用户</th>
+             <th width="120">封面图</th>
                 <!--<th  width="80px">排序</th>-->
                  <th width="220px">标题</th>
                  <th width="">所属分类</th>
@@ -194,7 +195,7 @@ function member_del(obj,id){
                 "status":0
             }),
             success:function (response) {
-                console.log(response);
+
                 if(response==true) {
                     str="已删除！";
                 }else {
@@ -228,7 +229,7 @@ function member_del(obj,id){
             }),
             async:false,
             success:function (response) {
-                console.log(response);
+
                 num = response;
             },
             error:function (response) {
@@ -253,8 +254,6 @@ function member_del(obj,id){
     });
     /**按分类搜索**/
     function searchByLabel(id,labelName) {
-        console.log(id);
-        console.log(labelName);
         initCount(id);
         initPage(1,labelName);
     }
@@ -278,13 +277,14 @@ function member_del(obj,id){
 
             }),
             success:function (response) {
-                console.log(response);
+
                 $("#articleTable").empty();
                 $(response.articleDtoList).each(function (index, item) {
                     $("#articleTable").append($("<tr>\n" +
                         "          <td><label><input type=\"checkbox\" class=\"ace ids\" value='"+item.article_id+"' onclick='chooseOne(this)'><span class=\"lbl\"></span></label></td>\n" +
                         "          <td>"+item.article_id+"</td>\n" +
                         "          <td>"+item.user_name+"</td>\n" +
+                        (item.article_pic == null?"<td><button onclick='upload_article_pic("+item.article_id+")'>上传封面</button></td>":"<td><a href='#'><img src=\"images/cover/"+item.article_pic+"\" style=\"width: 120px;height: 90px;\" align=\"middle\" onclick='upload_article_pic("+item.article_id+")'/></a></td>") +
                         "          <td>"+item.article_title+"</td>\n" +
                         "          <td>"+item.label_name+"</td>\n" +
                         "          <td>"+item.create_time+"</td>\n" +
@@ -341,7 +341,6 @@ function member_del(obj,id){
         }
     });
     function chooseOne(obj) {
-        console.log(chooseNum);
         var flag = $(obj).prop("checked");
         if (flag) {
             chooseNum++;
@@ -374,7 +373,7 @@ function member_del(obj,id){
                         "status":0
                     }),
                     success:function (response) {
-                        console.log(response);
+
                         if(response==true) {
                             str++;
                         }
@@ -397,4 +396,42 @@ function member_del(obj,id){
             layer.msg("删除成功！",{icon:1,time:1000});
         });
     }
+
+    /**上传图片**/
+    function upload_article_pic(articleId) {
+        var html = "<div style='margin-left: 50px'><form id='uploadForm' name=\"formUpload\" action=\"/back_platform/fileUpload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
+            "<label>封面图片</label><input type='hidden' name='articleId' value='"+articleId+"'/>\n" +
+            "<input name=\"uploadFile\" type=\"file\" id='uploadPic'/><br/>\n" +
+            "<img id=\"article_pic\"/><br/>\n" +
+            "</form></div>";
+        layer.open({
+            type: 1,
+            title: '编辑文章封面',
+            maxmin: true,
+            shadeClose: true, //点击遮罩关闭层
+            area : ['600px' , ''],
+            content:html,
+            btn:['提交','取消'],
+            yes:function(index,layero){
+
+                $("#uploadForm").submit();
+
+                layer.alert("修改完成",{
+                    title: '提示框',
+                    icon:1,
+                });
+                layer.close(index);
+
+            }
+        })
+    }
+
+    $("#uploadPic").change(function () {
+        //获取上传的图片
+        var fileObj = this.files[0];
+        //把图片对象转换成url
+        var fileUrl = window.URL.createObjectURL(fileObj);
+        //改变图片的src属性
+        $("#article_pic").attr("src",fileUrl);
+    })
 </script>

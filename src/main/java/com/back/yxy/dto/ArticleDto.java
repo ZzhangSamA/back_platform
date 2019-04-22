@@ -7,6 +7,15 @@ public class ArticleDto {
     private String update_time;
     private String user_name;
     private String label_name;
+    private String article_pic;
+
+    public String getArticle_pic() {
+        return article_pic;
+    }
+
+    public void setArticle_pic(String article_pic) {
+        this.article_pic = article_pic;
+    }
 
     public int getArticle_id() {
         return article_id;
@@ -65,6 +74,7 @@ public class ArticleDto {
                 ", update_time='" + update_time + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", label_name='" + label_name + '\'' +
+                ", article_pic='" + article_pic + '\'' +
                 '}';
     }
 }
