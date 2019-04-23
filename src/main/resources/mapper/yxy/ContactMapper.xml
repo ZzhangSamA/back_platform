@@ -186,4 +186,31 @@
       status = #{status,jdbcType=BIT}
     where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotalContact" parameterType="com.back.yxy.pojo.Contact" resultType="int">
+    select count(*) from contact where status=1
+    and content like(#{content}) and create_time like(#{createTime})
+    <if test="isReaded != null">
+      and is_readed=#{isReaded}
+    </if>
+  </select>
+
+  <select id="getContactList" parameterType="com.back.yxy.pojo.Contact" resultMap="BaseResultMap">
+    select * from contact where status=1 and
+    content like(#{content}) and create_time like(#{createTime})
+    <if test="isReaded != null">
+      and is_readed=#{isReaded}
+    </if>
+    <if test="page != null">
+      limit #{page.startPage},#{page.pageSize}
+    </if>
+  </select>
+
+  <update id="batchDel">
+    update contact set status=0 where contact_id in
+    <foreach collection="array" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
+
 </mapper>
