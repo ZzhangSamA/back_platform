@@ -14,7 +14,7 @@ public class SplitPage {
     // 每页显示数量
     private int pageSize;
     //每页开始值
-    private  int Start;
+    private  int start;
 
     public int getCurrentPage() {
         return currentPage;
@@ -22,6 +22,7 @@ public class SplitPage {
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
+        setStart((currentPage-1)* this.pageSize);
     }
 
     public int getTotalLine() {
@@ -29,8 +30,9 @@ public class SplitPage {
     }
 
     public void setTotalLine(int totalLine) {
-        setTotalPage(totalLine/pageSize==0?totalLine/pageSize:totalLine/pageSize+1);
         this.totalLine = totalLine;
+        setTotalPage((totalLine - 1 + this.pageSize) / this.pageSize);
+//        setTotalPage(totalLine/pageSize==0?totalLine/pageSize:totalLine/pageSize+1);
     }
 
     public int getTotalPage() {
@@ -53,10 +55,21 @@ public class SplitPage {
     }
 
     public int getStart() {
-        return (currentPage-1)*pageSize;
+        return start;
     }
 
     public void setStart(int start) {
-        Start = start;
+        this.start = start;
+    }
+
+    @Override
+    public String toString() {
+        return "SplitPage{" +
+                "currentPage=" + currentPage +
+                ", totalLine=" + totalLine +
+                ", totalPage=" + totalPage +
+                ", pageSize=" + pageSize +
+                ", start=" + start +
+                '}';
     }
 }
