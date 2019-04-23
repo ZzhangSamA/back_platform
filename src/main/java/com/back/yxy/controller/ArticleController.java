@@ -8,16 +8,15 @@ import com.back.yxy.vo.ArticleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class ArticleController {
@@ -115,5 +114,57 @@ public class ArticleController {
     @RequestMapping(value = "updateArticle",method = RequestMethod.POST)
     public String updateArticle(@RequestBody BlogArticle blogArticle) {
         return articleService.updateArticle(blogArticle).toString();
+    }
+
+    static String COVER_PATH = "/static/cover/";
+    @RequestMapping("fileUpload")
+    public void fileUpload (@RequestParam("uploadFile") CommonsMultipartFile CMFile, HttpServletResponse response,HttpServletRequest request) throws IOException {
+        if(CMFile.getOriginalFilename()=="") {
+            response.sendRedirect("article_list.html");
+            return;
+        }
+        // 获取文件后缀
+        String fileName = CMFile.getOriginalFilename();
+        String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
+
+        // 文件存放路径
+        String filePath = request.getSession().getServletContext().getRealPath(COVER_PATH);
+        System.out.println(filePath);
+        InetAddress ia=null;
+        try {
+            ia = ia.getLocalHost();
+            System.out.println(ia.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        // 判断路径是否存在，不存在则创建文件夹
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        // 将文件写入目标
+        file = new File(filePath, UUID.randomUUID() + fileSuffix);
+        try {
+            CMFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 获取服务端路径
+        String picPath = String.format("%s://%s:%s%s%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), COVER_PATH);
+        String pic = picPath+file.getName();
+        System.out.println(pic);
+
+
+        //更新数据库
+        String articleId = request.getParameter("articleId");
+        BlogArticle blogArticle = new BlogArticle();
+        blogArticle.setArticleId(Integer.parseInt(articleId));
+        blogArticle.setArticle_pic(pic);
+        articleService.updatePicByArticleId(blogArticle);
+
+        response.sendRedirect("article_list.html");
     }
 }

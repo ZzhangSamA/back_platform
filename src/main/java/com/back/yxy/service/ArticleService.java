@@ -24,4 +24,6 @@ public interface ArticleService {
 
     public Boolean updateArticle(BlogArticle blogArticle);
 
+    public void updatePicByArticleId(BlogArticle blogArticle);
+
 }

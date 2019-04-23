@@ -131,4 +131,8 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return true;
     }
+
+    public void updatePicByArticleId(BlogArticle blogArticle) {
+        blogArticleMapper.updateByPrimaryKeySelective(blogArticle);
+    }
 }
