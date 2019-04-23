@@ -86,4 +86,16 @@ public class GoodsType {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsType{" +
+                "goodsTypeId=" + goodsTypeId +
+                ", goodsTypeName='" + goodsTypeName + '\'' +
+                ", parentId=" + parentId +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

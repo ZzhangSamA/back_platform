@@ -61,6 +61,36 @@ public class BlogArticle {
 
     private Page page;
 
+    private String labelName;
+
+    private String[] ids;
+
+    private String article_pic;
+
+    public String getArticle_pic() {
+        return article_pic;
+    }
+
+    public void setArticle_pic(String article_pic) {
+        this.article_pic = article_pic;
+    }
+
+    public String[] getIds() {
+        return ids;
+    }
+
+    public void setIds(String[] ids) {
+        this.ids = ids;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
     public Page getPage() {
         return page;
     }
@@ -235,5 +265,19 @@ public class BlogArticle {
      */
     public void setArticleContent(String articleContent) {
         this.articleContent = articleContent == null ? null : articleContent.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "BlogArticle{" +
+                "articleId=" + articleId +
+                ", userId=" + userId +
+                ", articleTitle='" + articleTitle + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", articleContent='" + articleContent + '\'' +
+                ", page=" + page +
+                '}';
     }
 }

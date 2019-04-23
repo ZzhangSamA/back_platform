@@ -12,4 +12,18 @@ public interface ArticleService {
 
     public List<ArticleDto> initArticlePage(BlogArticle blogArticle);
 
+    public int getTotalCount();
+
+    public Boolean updateByPrimaryKeySelective(BlogArticle blogArticle);
+
+    public Boolean insertSelective(BlogArticle blogArticle);
+
+    public List<ArticleLabel> getLabelIdByArticleId(ArticleLabel articleLabel);
+
+    public BlogArticle selectByPrimaryKey(Integer articleId);
+
+    public Boolean updateArticle(BlogArticle blogArticle);
+
+    public void updatePicByArticleId(BlogArticle blogArticle);
+
 }

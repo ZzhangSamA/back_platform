@@ -136,8 +136,9 @@
     where label_id = #{labelId,jdbcType=INTEGER}
   </update>
 
-  <select id="getTotalSort" resultType="int">
-    select count(*) from blog_label where status=1
+  <select id="getTotalSort" resultType="int" parameterType="com.back.yxy.pojo.BlogLabel">
+    select count(*) from blog_label where status=1 and
+    (label_name like(#{labelName}) or label_desc like(#{labelDesc})) and create_time like(#{createTime})
   </select>
 
   <select id="getAllLabel" resultMap="BaseResultMap" parameterType="com.back.yxy.pojo.BlogLabel">

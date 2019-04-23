@@ -53,7 +53,7 @@ public interface BlogLabelMapper {
      */
     int updateByPrimaryKey(BlogLabel record);
 
-    public int getTotalSort();
+    public int getTotalSort(BlogLabel blogLabel);
 
     public List<BlogLabel> getAllLabel(BlogLabel blogLabel);
 

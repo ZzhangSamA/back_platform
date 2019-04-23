@@ -29,10 +29,40 @@
     SELECT g1.*,g2.goods_type_id cid,g2.create_time ccreate,g2.goods_type_name cname,g2.parent_id cpid,g2.update_time cupdate
  FROM goods_type g1 , goods_type g2 WHERE g1.goods_type_id = g2.parent_id  and g2.`status`=1
   </select>
-  <select id="getAllGoodsTypeTest" resultType="com.back.rsx.dto.GoodsTypeEcho">
+  <select id="getAllGoodsTypeTest" resultType="com.back.rsx.dto.GoodsTypeEcho" parameterType="com.back.rsx.pojo.GoodsType">
     SELECT goods_type_id id,parent_id pId,goods_type_name name FROM goods_type where `status`=1
+    <if test="goodsTypeId !=null and goodsTypeId !=''">
+        and goods_type_id = #{goodsTypeId}
+    </if>
+    <if test="goodsTypeName !=null and goodsTypeName !=''">
+        and goods_type_name = #{goodsTypeName}
+    </if>
+    <if test="parentId !=null and parentId !=''">
+        and parent_id = #{parentId}
+    </if>
   </select>
+  <update id="updateGoodsTypeById" parameterType="com.back.rsx.pojo.GoodsType">
+    update goods_type
+    <set>
+      <if test="goodsTypeName !=null and goodsTypeName !=''">
+       goods_type_name = #{goodsTypeName},
+      </if>
+      <if test="parentId !=null and parentId !=''">
+       parent_id = #{parentId},
+      </if>
+      <if test="true">
+        update_time = now()
+      </if>
+    </set>
+    where goods_type_id = #{goodsTypeId}
+  </update>
+  <update id="deleteGoodsTypeById" parameterType="com.back.rsx.pojo.GoodsType">
+    update goods_type set status = 0,update_time = now()
+     where goods_type_id = #{goodsTypeId}
+  </update>
 
-
+  <insert id="addGoodsType" parameterType="com.back.rsx.pojo.GoodsType">
+    insert into goods_type values(default ,#{goodsTypeName},#{parentId},default ,null ,1);
+  </insert>
 
 </mapper>

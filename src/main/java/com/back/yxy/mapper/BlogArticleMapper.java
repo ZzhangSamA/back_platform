@@ -63,4 +63,9 @@ public interface BlogArticleMapper {
     int updateByPrimaryKey(BlogArticle record);
 
     public List<ArticleDto> initArticlePage(BlogArticle blogArticle);
+
+    public int getTotalCount();
+
+    public int getIdByArticleTitle(BlogArticle blogArticle);
+
 }
