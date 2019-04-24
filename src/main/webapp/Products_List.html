@@ -140,8 +140,8 @@
                             "                    <td width=\"100px\">"+item.brandName+"</td>\n" +
                             "                    <td width=\"180px\">"+item.createTime+"</td>\n" +
                             "                    <td class=\"td-manage\">\n" +
-                            "                        <a onClick=\"member_stop(this,'10001')\"  href=\"javascript:;\" title=\"参数操作\"  class=\"btn btn-xs btn-success\"><i class=\"icon-ok bigger-120\"></i></a>\n" +
-                            "                        <a title=\"编辑\" onclick=\"member_edit('编辑','member-add.html','4','','510')\" href=\"javascript:;\"  class=\"btn btn-xs btn-info\" ><i class=\"icon-edit bigger-120\"></i></a>\n" +
+                            "                        <a   href=\"products_parameter.html?goodsId="+item.goodsId+"\" title=\"参数操作\"  class=\"btn btn-xs btn-success\"><i class=\"icon-ok bigger-120\"></i></a>\n" +
+                            "                        <a title=\"编辑\" onclick='member_edit("+item.goodsId+")' href=\"javascript:;\"  class=\"btn btn-xs btn-info\" ><i class=\"icon-edit bigger-120\"></i></a>\n" +
                             "                        <a title=\"删除\" href=\"javascript:;\"  onclick='goodsDelete("+item.goodsId+")' class=\"btn btn-xs btn-warning\" ><i class=\"icon-trash  bigger-120\"></i></a>\n" +
                             "                    </td>\n" +
                             "                </tr>";
@@ -249,8 +249,8 @@
 
 
     /*品牌-编辑*/
-    function member_edit(brandId){
-        var url = "modification_Brand.html?userId="+brandId;
+    function member_edit(goodsId){
+        var url = "modification_picture.html?goodsId="+goodsId;
         window.location.href = url;
     }
 
