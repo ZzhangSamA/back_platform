@@ -8,4 +8,8 @@
     <result column="is_cover" jdbcType="BIT" property="isCover" />
   </resultMap>
 
+  <insert id="addImgByGoodsId" parameterType="map">
+    insert into goods_img values (default ,#{goodsId},#{imgName},#{isCover})
+  </insert>
+
 </mapper>

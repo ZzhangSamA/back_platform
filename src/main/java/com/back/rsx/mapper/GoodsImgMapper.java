@@ -1,5 +1,7 @@
 package com.back.rsx.mapper;
 
-public interface GoodsImgMapper {
+import java.util.Map;
 
+public interface GoodsImgMapper {
+    int addImgByGoodsId(Map map);
 }

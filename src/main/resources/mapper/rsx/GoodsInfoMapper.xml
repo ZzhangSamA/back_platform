@@ -13,8 +13,60 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+  <resultMap id="goodsInfoMap" type="com.back.rsx.dto.GoodsInfoDto">
+    <id column="goods_id" property="goodsId"/>
+    <result column="goods_name" property="goodsName"></result>
+    <result column="goods_number" property="goodsNumber"></result>
+    <result column="show_price" property="showPrice"></result>
+    <result column="goods_type_id" property="goodsTypeId"></result>
+    <result column="goods_type_name" property="goodsTypeName"></result>
+    <result column="brand_id" property="brandId"></result>
+    <result column="brand_name" property="brandName"></result>
+    <result column="create_time" property="createTime"></result>
+  </resultMap>
+  <select id="getGoodsInfoBy" parameterType="com.back.rsx.vo.GoodsInfoVo" resultMap="goodsInfoMap" >
+    SELECT g.*,b.brand_name FROM
+    (SELECT gi.goods_id,gi.goods_name,gi.create_time,gi.goods_number,gi.show_price ,gt.goods_type_id,gt.goods_type_name,gi.brand_id
+    FROM goods_info gi ,goods_type gt where gi.goods_type_id=gt.goods_type_id AND gi.`status`=1
+    <if test="createTime != null and createTime!=''">
+      and gi.create_time like concat(#{createTime},'%')
+    </if>
+    ) g ,brand b
+     where g.brand_id = b.brand_id and b.`status`=1
 
+    <if test="goodsName !=null and goodsName != ''">
+      and goods_name = #{goodsName}
+    </if>
+    limit #{splitePageBean.start},#{splitePageBean.pageSize}
+  </select>
+  <select id="getGoodsCount" parameterType="com.back.rsx.vo.GoodsInfoVo" resultType="int" >
+    SELECT count(1) FROM
+    (SELECT gi.goods_id,gi.goods_name,gi.goods_number,gi.show_price ,gt.goods_type_id,gt.goods_type_name,gi.brand_id
+    FROM goods_info gi ,goods_type gt where gi.goods_type_id=gt.goods_type_id AND gi.`status`=1
+    <if test="createTime != null and createTime!=''">
+      and gi.create_time like concat(#{createTime},'%')
+    </if>
+    ) g ,brand b
+    where g.brand_id = b.brand_id and b.`status`=1
 
+    <if test="goodsName !=null and goodsName != ''">
+      and goods_name = #{goodsName}
+    </if>
 
+  </select>
+  <insert id="addGoodsInfo" parameterType="com.back.rsx.pojo.GoodsInfo" useGeneratedKeys="true" keyProperty="goodsId">
+    insert into goods_info
+    values (default ,#{goodsTitle},#{goodsName},#{goodsTypeId},#{brandId},#{goodsNumber},default ,#{showPrice},default ,default ,#{goodsDetails},1)
+
+  </insert>
+  <update id="deleteGoodsById" parameterType="com.back.rsx.pojo.GoodsInfo">
+        update goods_info set status = 0 ,update_time = now() where goods_id =#{goodsId}
+  </update>
+  <update id="deleteBySel" parameterType="map">
+    update goods_info set status=0 ,update_time = now()  where goods_id in
+    <foreach collection="ids" item="goodsId" open="(" separator="," close=")">
+      #{goodsId}
+    </foreach>
+  </update>
 
 </mapper>

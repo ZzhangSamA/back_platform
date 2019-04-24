@@ -17,13 +17,23 @@ public class GoodsInfo {
 
     private Integer stock;
 
-    private String status;
+    private Boolean status;
 
     private Date createTime;
 
     private Date updateTime;
 
     private String goodsDetails;
+
+    private Double showPrice;
+
+    public Double getShowPrice() {
+        return showPrice;
+    }
+
+    public void setShowPrice(Double showPrice) {
+        this.showPrice = showPrice;
+    }
 
     public Integer getGoodsId() {
         return goodsId;
@@ -81,12 +91,12 @@ public class GoodsInfo {
         this.stock = stock;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -111,5 +121,23 @@ public class GoodsInfo {
 
     public void setGoodsDetails(String goodsDetails) {
         this.goodsDetails = goodsDetails == null ? null : goodsDetails.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsInfo{" +
+                "goodsId=" + goodsId +
+                ", goodsTitle='" + goodsTitle + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsTypeId=" + goodsTypeId +
+                ", brandId=" + brandId +
+                ", goodsNumber='" + goodsNumber + '\'' +
+                ", stock=" + stock +
+                ", status='" + status + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", goodsDetails='" + goodsDetails + '\'' +
+                ", showPrice=" + showPrice +
+                '}';
     }
 }

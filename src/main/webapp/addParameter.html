@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="clearfix cl">
+    <label class="form-label col-2">商品参数：</label>
+    <div><br><br>
+        <form id="parameter">
+            <div id="inputElement">
+                参数类型：<input type="text"><input type="text"><input  type="hidden" name="parameter" class="parameter" id="1">:价格<br>
+                参数类型：<input type="text"><input type="text"><input  type="hidden" name="parameter" class="parameter" id="2">:价格<br>
+            </div>
+        </form>
+        <input onclick="addElement()" type="button" value="添加更多" >
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function fuzhi() {
+
+        for (var i=1;i<number;i++){
+            $("#"+i).val($("#"+i).prev().prev().val()+"%/@&"+$("#"+i).prev().val())
+
+        }
+    }
+    function addElement() {
+        if (number<10){
+            number++;
+            $("#inputElement").append("参数类型：<input type=\"text\"><input type=\"text\"><input  type=\"hidden\" name=\"parameter\" class=\"parameter\" id=\""+number+"\">:价格<br>")
+
+        } else {
+            alert("最多提交十个参数哦")
+        }
+        // alert("添加元素")
+        // var html = $("#inputElement").html();
+        // alert(html);
+        // $("#inputElement").html(html+"参数类型：<input type=\"text\"><input type=\"text\"><input  type=\"hidden\" name=\"parameter\" class=\"parameter\" id=\""+number+"\">:价格<br>")
+
+    }
+</script>
+</html>

@@ -12,4 +12,7 @@
     <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
 
+  <insert id="addParameter" parameterType="map">
+    insert into goods_parameter values (default ,#{goodsId},#{parameterName},default ,#{parameterPrice},default ,default )
+  </insert>
 </mapper>
