@@ -186,6 +186,7 @@
     LEFT JOIN blog_label bl on bl.label_id=al.label_id and bl.`status`=1
     where ba.article_title like(#{articleTitle}) and ba.create_time like(#{createTime})
     and bl.label_name like(#{labelName})
+    order by ba.create_time desc
     <!--<if test="page != null">-->
       <!--limit #{page.startPage},#{page.pageSize}-->
     <!--</if>-->
