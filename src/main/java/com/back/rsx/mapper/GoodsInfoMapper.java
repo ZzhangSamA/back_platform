@@ -13,4 +13,6 @@ public interface GoodsInfoMapper {
     int addGoodsInfo(GoodsInfo goodsInfo);
     int deleteGoodsById(GoodsInfo goodsInfo);
     int deleteBySel(Map map);
+    GoodsInfo getGoodsById(Integer goodsId);
+    int updateGoodsInfo(GoodsInfo goodsInfo);
 }
