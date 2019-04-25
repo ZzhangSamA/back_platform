@@ -105,7 +105,7 @@
 </div>
  <!--添加管理员-->
  <div id="add_administrator_style" class="add_menber" style="display:none">
-    <form action="" method="post" id="form-admin-add">
+    <form action="" method="post" id="form-admin-add" onsubmit="return check()">
 		<div class="form-group">
 			<label class="form-label"><span class="c-red" id="username">*</span>用户名：</label>
 			<div class="formControls">
@@ -141,7 +141,7 @@
             </div>
             <div class="col-4"> <span class="Validform_checktip"></span></div>
         </div>
-        <input class="btn btn-primary radius" type="submit" id="Add_Administrator" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="add()">
+        <input class="btn btn-primary radius" type="submit" id="Add_Administrator" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" >
 
     </form>
      </div></div></div></div>
@@ -404,7 +404,7 @@ function initPage(currentPage){
 initPage(1);
 
 //添加
-function add() {
+function check() {
     $.ajax({
         type:"POST",
         url:"addUser",
@@ -419,17 +419,46 @@ function add() {
         //2.根据返回值提示并跳转
         success:function (response) {
             if(response==true){
+                return true;
                 window.location.href="administrator.html";
             }else {
                 alert("添加失败")
             }
         },
-        // error:function (response) {
-        //     alert("服务器内部错误,添加失败")
-        // },
+        error:function (response) {
+            return false;
+            alert("服务器内部错误,添加失败")
+        },
         dataType: 'json'
     })
 }
+// function add() {
+//     $.ajax({
+//         type:"POST",
+//         url:"addUser",
+//         contentType:"application/json; charset=utf-8",
+//         data:JSON.stringify({
+//             "userNumber":$("#num").val(),
+//             "userName":$("#user-name").val(),
+//             "password":$("#user-password").val(),
+//             "email":$("#email").val(),
+//             "telephone":$("#user-tel").val(),
+//         }),
+//         //2.根据返回值提示并跳转
+//         success:function (response) {
+//             if(response==true){
+//                 $("#Add_Administrator").removeAttrs("disabled");
+//                 window.location.href="administrator.html";
+//             }else {
+//                 alert("添加失败")
+//             }
+//         },
+//         error:function (response) {
+//             alert("服务器内部错误,添加失败")
+//         },
+//         dataType: 'json'
+//     })
+// }
 //修改页面跳转
 function jumpToEdit(userId) {
     var url="editUser.html?userId="+userId;
