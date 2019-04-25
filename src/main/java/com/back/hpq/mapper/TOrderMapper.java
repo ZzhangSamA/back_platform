@@ -1,6 +1,10 @@
 package com.back.hpq.mapper;
 
+import com.back.hpq.dto.*;
 import com.back.hpq.pojo.TOrder;
+import com.back.hpq.vo.*;
+
+import java.util.List;
 
 public interface TOrderMapper {
     /**
@@ -50,4 +54,40 @@ public interface TOrderMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TOrder record);
+
+    List<TOrderDto> getOrdersByCustomId(OrderInfoVo orderInfoVo);
+
+    int delivery(TOrder tOrder);
+
+    int getOrderCount(int customerId);
+
+    int getStatus(String orderNumber);
+
+    int refuseOrder(TOrder tOrder);
+
+    OrderDetail getOrderDetail(TOrder tOrder);
+
+    TOrder getCreatTime(TOrder tOrder);
+
+    GoodsDto getGoodsInfo(GoodsOrderVo goodsOrderVo);
+
+    GoodsDto getRefuseGoods(GoodsOrderVo goodsOrderVo);
+
+    StatusDto checkStatus(ReturnMessageVo returnMessageVo);
+
+    int setStatus(ChangeGoodsStatusVo changeGoodsStatusVo);
+
+    /**
+     * 根据支付结果，修改订单状态为：待发货
+     * @param paymentVo
+     * @return
+     */
+    Integer updateByPayInfo(PaymentVo paymentVo);
+
+    /**
+     * 根据订单编号获取TOrder对象
+     * @param orderNumber
+     * @return
+     */
+    TOrder getOrderByOrderNumber(String orderNumber);
 }
