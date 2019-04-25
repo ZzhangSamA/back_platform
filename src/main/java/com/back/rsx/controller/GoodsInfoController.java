@@ -28,7 +28,12 @@ public class GoodsInfoController {
 
     /**
      * 根据前端传的数据获取数据
-     * @param goodsInfoVo
+     * @param goodsInfoVo {
+     *                    Integer goodsId;
+     *     createTime;创建时间
+     *     goodsName; 商品名
+     *     splitePageBean;分页信息
+     * }
      * @return
      */
     @RequestMapping(value = "getGoodsInfoBy",method = RequestMethod.POST)
@@ -39,10 +44,10 @@ public class GoodsInfoController {
 
     /**
      *
-     * 富文本上传图片至images内容
-     * @param editorFile
+     * 富文本上传图片至images内
+     * @param editorFile 上传文件
      * @param request
-     * @return
+     * @return 图片地址
      */
     @RequestMapping(value = "uploadByRsx", method = RequestMethod.POST)
     public Map<String, Object> upload1(MultipartFile editorFile, HttpServletRequest request) {
@@ -97,6 +102,12 @@ public class GoodsInfoController {
 
         return goodsInfo.getGoodsId();
     }
+
+    /**
+     * 根据对象更新数据
+     * @param goodsInfo
+     * @return
+     */
     @RequestMapping(value = "updateGoodsInfo")
     public Object updateGoodsInfo(@RequestBody(required = false)GoodsInfo goodsInfo){
         System.out.println(goodsInfo);
@@ -108,8 +119,8 @@ public class GoodsInfoController {
     /**
      * 根据商品id上传图片
      * @param request
-     * @param uploadFile
-     * @param files
+     * @param uploadFile    主图
+     * @param files 副图集合
      * @return
      */
     @Transactional
@@ -144,6 +155,13 @@ public class GoodsInfoController {
            reSet = goodsImgService.addImgByGoodsId(map);
         }
         return reSet;}
+
+    /**
+     * 根据商品id更新图片
+     * @param request
+     * @param uploadFile 上传的图片
+     * @return
+     */
     @RequestMapping(value = "public/goodsImgUpload",method = RequestMethod.POST)
     public Object updateImgById(HttpServletRequest request , @RequestParam(value = "uploadFile",required = false) CommonsMultipartFile uploadFile){
         GoodsImg goodsImg = new GoodsImg();
@@ -170,12 +188,10 @@ public class GoodsInfoController {
         s = fileKit.UploadFile(uploadFile,request);
         s = serverPath + "/"+s;
         goodsImg.setGoodsImage(s);
-        System.out.println(goodsImg);
         if (imgId!=0){
             goodsImgService.updateImgBy(goodsImg);
         }else {
             goodsImgService.addImgByGoodsIdGetImgId(goodsImg);
-            System.out.println(goodsImg);
         }
 
 
@@ -192,13 +208,11 @@ public class GoodsInfoController {
      */
     @RequestMapping(value = "deleteGoodsById",method = RequestMethod.POST)
     public Object deleteGoodsById(@RequestBody(required = false) GoodsInfo goodsInfo){
-        System.out.println(goodsInfo);
         return goodsInfoService.deleteGoodsById(goodsInfo);
     }
 
     @RequestMapping(value = "deleteGoodsBySel")
     public Object deleteBySel(@RequestParam(value = "ids[]") List<Integer> ids){
-        System.out.println(ids);
         Map<String, List> map = new HashMap<String, List>();
         map.put("ids",ids);
         return goodsInfoService.deleteBySel(map);
