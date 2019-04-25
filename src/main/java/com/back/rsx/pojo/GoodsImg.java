@@ -40,4 +40,22 @@ public class GoodsImg {
     public void setIsCover(Boolean isCover) {
         this.isCover = isCover;
     }
+
+    public Boolean getCover() {
+        return isCover;
+    }
+
+    public void setCover(Boolean cover) {
+        isCover = cover;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsImg{" +
+                "imgId=" + imgId +
+                ", goodsId=" + goodsId +
+                ", goodsImage='" + goodsImage + '\'' +
+                ", isCover=" + isCover +
+                '}';
+    }
 }

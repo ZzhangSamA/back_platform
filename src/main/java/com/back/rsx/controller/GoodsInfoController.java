@@ -1,5 +1,6 @@
 package com.back.rsx.controller;
 
+import com.back.rsx.pojo.GoodsImg;
 import com.back.rsx.pojo.GoodsInfo;
 import com.back.rsx.service.GoodsImgService;
 import com.back.rsx.service.GoodsInfoService;
@@ -78,7 +79,6 @@ public class GoodsInfoController {
 
         // 获取服务端路径
         String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), UPLOAD_PATH);
-        System.out.println(serverPath);
         // 返回给 wangEditor 的数据格式
         result.put("errno", 0);
         result.put("data", new String[]{serverPath + "/"+file.getName()});
@@ -92,10 +92,17 @@ public class GoodsInfoController {
      */
     @RequestMapping(value = "addGoodsInfo")
     public Object addGoodsInfo(@RequestBody(required = false)GoodsInfo goodsInfo){
-        System.out.println(goodsInfo);
+
         goodsInfoService.addGoodsInfo(goodsInfo);
-        System.out.println(goodsInfo);
+
         return goodsInfo.getGoodsId();
+    }
+    @RequestMapping(value = "updateGoodsInfo")
+    public Object updateGoodsInfo(@RequestBody(required = false)GoodsInfo goodsInfo){
+        System.out.println(goodsInfo);
+
+
+        return goodsInfoService.updateGoodsInfo(goodsInfo);
     }
 
     /**
@@ -112,21 +119,68 @@ public class GoodsInfoController {
         Integer id = Integer.parseInt(request.getParameter("goodsId"));
         map.put("goodsId",id);
         map.put("isCover",1);
+        InetAddress ia=null;
         String s;
         int reSet=0 ;
         UploadFileKit fileKit = new UploadFileKit();
+
+        try {
+            ia = ia.getLocalHost();
+            System.out.println(ia.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        // 获取服务端路径
+        String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
+        System.out.println(serverPath);
         s = fileKit.UploadFile(uploadFile,request);
-        map.put("imgName",s);
+        map.put("imgName",serverPath + "/"+s);
         goodsImgService.addImgByGoodsId(map);
         map.put("isCover",0);
         String originalFilename = uploadFile.getOriginalFilename();
         for(int i=0; i<files.length; i++){
             s = fileKit.UploadFile(files[i],request);
-            map.put("imgName",s);
-            String originalFilename1 = files[i].getOriginalFilename();
+            map.put("imgName",serverPath + "/"+s);
            reSet = goodsImgService.addImgByGoodsId(map);
         }
-        return reSet;
+        return reSet;}
+    @RequestMapping(value = "public/goodsImgUpload",method = RequestMethod.POST)
+    public Object updateImgById(HttpServletRequest request , @RequestParam(value = "uploadFile",required = false) CommonsMultipartFile uploadFile){
+        GoodsImg goodsImg = new GoodsImg();
+        Map<String, Object> map = new HashMap<String, Object>();
+        Integer id = Integer.parseInt(request.getParameter("goodsId"));
+            goodsImg.setGoodsId(id);
+        Integer isCover = Integer.parseInt(request.getParameter("isCover"));
+        Integer imgId = Integer.parseInt(request.getParameter("imgId"));
+            goodsImg.setImgId(imgId);
+        goodsImg.setIsCover(isCover!=0);
+  InetAddress ia=null;
+        String s;
+
+        UploadFileKit fileKit = new UploadFileKit();
+
+        try {
+            ia = ia.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        // 获取服务端路径
+        String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
+        System.out.println(serverPath);
+        s = fileKit.UploadFile(uploadFile,request);
+        s = serverPath + "/"+s;
+        goodsImg.setGoodsImage(s);
+        System.out.println(goodsImg);
+        if (imgId!=0){
+            goodsImgService.updateImgBy(goodsImg);
+        }else {
+            goodsImgService.addImgByGoodsIdGetImgId(goodsImg);
+            System.out.println(goodsImg);
+        }
+
+
+        System.out.println(goodsImg);
+        return goodsImg;
 
 
     }
@@ -148,5 +202,21 @@ public class GoodsInfoController {
         Map<String, List> map = new HashMap<String, List>();
         map.put("ids",ids);
         return goodsInfoService.deleteBySel(map);
+    }
+
+    /**
+     * 根据商品id获取商品信息
+     * @param goodsInfo
+     * @return
+     */
+    @RequestMapping(value = "getGoodsById",method = RequestMethod.POST)
+    public Object getGoodsById(@RequestBody(required = false) GoodsInfo goodsInfo){
+
+        return goodsInfoService.getGoodsById(goodsInfo.getGoodsId());
+    }
+    @RequestMapping(value = "getImageById",method = RequestMethod.POST)
+    public Object getImageById(@RequestParam(value = "goodsId")int goodsId){
+
+        return goodsImgService.getImageById(goodsId);
     }
     }

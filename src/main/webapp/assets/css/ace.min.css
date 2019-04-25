@@ -182,7 +182,7 @@ h6
   font-weight: normal;
   font-family: "Microsoft YaHei",Helvetica,Arial,sans-serif;
 }
-
+table.table-bordered thead tr th
 h6.smaller
 {
   font-size: 12px;

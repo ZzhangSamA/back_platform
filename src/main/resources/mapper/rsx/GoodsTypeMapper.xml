@@ -64,5 +64,8 @@
   <insert id="addGoodsType" parameterType="com.back.rsx.pojo.GoodsType">
     insert into goods_type values(default ,#{goodsTypeName},#{parentId},default ,null ,1);
   </insert>
+    <select id="getParentId" resultType="int" parameterType="int">
+        SELECT parent_id FROM goods_type WHERE goods_type_id =#{goodsId}
+    </select>
 
 </mapper>

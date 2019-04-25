@@ -15,5 +15,6 @@ public interface GoodsTypeMapper {
     int updateGoodsTypeById(GoodsType goodsType);
     int deleteGoodsTypeById(GoodsType goodsType);
     int addGoodsType(GoodsType goodsType);
+    int getParentId(int goodsTypeId);
 
 }

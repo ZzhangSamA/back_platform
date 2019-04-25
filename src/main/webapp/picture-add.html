@@ -117,7 +117,7 @@
 		<div class="clearfix cl">
 			<div class="Button_operation">
 				<button class="btn btn-primary radius" type="button" id="update"><i class="icon-save "></i>提交</button>
-				<button onclick="addParameter(1)" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<button onclick="fanhui()"  class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
 	</form>
@@ -211,6 +211,9 @@
             dataType: 'json'
         });
     }
+    function fanhui() {
+		location.href="Products_List.html";
+    }
 	function addGoodsInfo(content) {
             /*var content = editor.txt.html();*/
 		if ($("#goodsTitle").val()&&$("#goodsName").val()&&$("#goodsType").val()&&$("#goodsBrand").val()&&$("#goodsNumber").val()&&content&&$("#showPrice").val()) {
@@ -231,9 +234,12 @@
             }),
             success: function(responseText){
                upload(responseText);
+               alert("添加成功");
+               location.href="Products_List.html";
             },
             error: function (message) {
                 console.log(message);
+                location.reload();
             },
             dataType: 'json'
         });}else {
@@ -245,17 +251,10 @@
 
 
 
-
-
-
-
-
-
-
-
     $(function () {
 		getGoodsTypeParent();
         getBrand();
+        getGoodsType(2);
         var E = window.wangEditor;//声明一个wangEditor对象
         var editor = new E('#editor'); // 两个参数也可以传入 elem 对象，class 选择器
         //开启debug模式
