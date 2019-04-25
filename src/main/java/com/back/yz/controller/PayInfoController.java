@@ -24,8 +24,6 @@ public class PayInfoController {
     @Autowired
     TOrderService tOrderService;
 
-
-
     /**
      * 获取分页查询数据集合
      * @param payInfoVo
