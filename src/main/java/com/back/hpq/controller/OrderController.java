@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class OrderController {
+    Boolean flag;
 
     @Autowired(required = false)
     OrderService orderService;
@@ -72,6 +73,24 @@ public class OrderController {
     public Object getRefuseGoods(@RequestBody(required = false)GoodsOrderVo goodsOrderVo, HttpSession httpSession){
         GoodsDto refuseGoods = orderService.getRefuseGoods(goodsOrderVo);
         return refuseGoods;
+    }
+
+    /**
+     * 发货
+     * @param tOrder{
+     *                  orderId:订单id,
+     *                  expCode:物流公司编号,
+     *                  expNo:物流单号
+     *              }
+     * @return
+     */
+    @RequestMapping(value = "setExpress",method = RequestMethod.POST)
+    public Object setExpress(@RequestBody(required = false)TOrder tOrder) {
+        if (tOrder == null) {
+            return false + "";
+        }
+        flag = orderService.updateByPrimaryKeySelective(tOrder);
+        return flag;
     }
 
 }
