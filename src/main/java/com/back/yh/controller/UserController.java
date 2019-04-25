@@ -11,13 +11,15 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
     @Autowired
     UserService userService;
-
+    //登录校验
     @RequestMapping(value = "loginCheck" ,method = RequestMethod.POST)
     public Object loginCheck(@RequestBody User user, HttpSession httpSession){
         Boolean flag=false;
@@ -31,7 +33,7 @@ public class UserController {
         }
         return "false";
     }
-
+    //获取页面数据与分页
     @RequestMapping(value = "getUserPage" ,method = RequestMethod.POST)
     public Object getUserPage(@RequestBody(required = false) UserVo userVo){
 //        System.out.println(userVo);
@@ -60,12 +62,62 @@ public class UserController {
         return userDto;
     }
 
+    /**
+     *添加用户
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "addUser" ,method = RequestMethod.POST)
     public Object addUser(@RequestBody User user){
         return userService.addUser(user);
     }
 
-    public Object getUser(@RequestBody int userId){
-        return this.userService.getUser(userId);
+    /**
+     * 获取用户信息回显
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "getUser" ,method = RequestMethod.POST)
+    public Object getUser(@RequestBody(required = false) User user){
+        User user1 = this.userService.getUser(user.getUserId());
+        System.out.println(user1);
+        return user1;
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "updateUser" ,method = RequestMethod.POST)
+    public Object updateUser(@RequestBody(required = false) User user){
+        int i = this.userService.updateUser(user);
+        System.out.println(i);
+        return i;
+    }
+
+    /**
+     * 单个删除
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "delUser" ,method = RequestMethod.POST)
+    public Object delUser(@RequestBody(required = false) User user){
+        int i = this.userService.delUser(user.getUserId());
+        System.out.println(i);
+        return i;
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "batchDelUser",method = RequestMethod.GET)
+    public String batchDelUser(@RequestParam(value = "ids[]", required = false) Integer[] ids){
+        Map<String,Object> map = new HashMap();
+        map.put("ids",ids);
+        Boolean flag = this.userService.batchDelUser(map);
+        return flag.toString();
     }
 }

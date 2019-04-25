@@ -11,8 +11,8 @@
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="INTEGER" />
         <result column="email" property="email" jdbcType="VARCHAR" />
-        <result column="birthday" property="birthday" jdbcType="VARCHAR" />
-        <result column="sex" property="sex" jdbcType="TIMESTAMP" />
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+        <result column="sex" property="sex" jdbcType="BIT" />
         <result column="telephone" property="telephone" jdbcType="TIMESTAMP" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="status" property="status" jdbcType="BIT" />
@@ -35,7 +35,7 @@
                 and email = #{email}
             </if>
             <if test="birthday!=null and birthday !=''">
-                and birthday = #{birthday}
+                and birthday like concat(#{birthday},'%')
             </if>
             <if test="sex!=null and sex !=''">
                 and sex = #{sex}
@@ -68,7 +68,7 @@
             and email = #{email}
         </if>
         <if test="birthday!=null and birthday !=''">
-            and birthday = #{birthday}
+            and birthday like concat(#{birthday},'%')
         </if>
         <if test="sex!=null and sex !=''">
             and sex = #{sex}
@@ -85,11 +85,11 @@
         </where>
         limit #{splitPage.start},#{splitPage.pageSize}
     </select>
-
+    <!--会员状态修改-->
     <update id="updateStatus" parameterType="int">
         update customer set status=0 where customer_id=#{customerId}
     </update>
-
+    <!--会员状态修改-->
     <update id="modifyStatus" parameterType="int">
         update customer set status=1 where customer_id=#{customerId}
     </update>

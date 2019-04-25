@@ -1,5 +1,6 @@
 package com.back.yh.pojo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Customer {
@@ -14,13 +15,13 @@ public class Customer {
 
     private String email;
 
-    private Date birthday;
+    private String birthday;
 
     private int sex;
 
     private String telephone;
 
-    private Date createTime;
+    private String createTime;
 
     private Date updateTime;
 
@@ -66,12 +67,24 @@ public class Customer {
         this.email = email == null ? null : email.trim();
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+        if(birthday==null){
+            this.birthday = null;
+            return;
+        }
+        String dateStr = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            dateStr = sdf.format(birthday);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        this.birthday = dateStr;
     }
 
     public int getSex() {
@@ -92,15 +105,25 @@ public class Customer {
     }
 
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+        if(createTime==null){
+            this.createTime = null;
+            return;
+        }
+        String dateStr = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            dateStr = sdf.format(createTime);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
+        this.createTime = dateStr;
+    }
 
     public Date getUpdateTime() {
         return updateTime;

@@ -12,19 +12,20 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired(required = false)
     CustomerMapper customerMapper;
+    //获取会员信息与分页
     public List<Customer> getCustomerPage(CustomerVo customerVo) {
         return this.customerMapper.getCustomerPage(customerVo);
     }
-
+    //获取数据条数
     public int getCount(CustomerVo customerVo) {
         return this.customerMapper.getCount(customerVo);
     }
-
+    //更新会员状态(禁用)
     public int updateStatus(int customerId) {
         int i = this.customerMapper.updateStatus(customerId);
         return i;
     }
-
+    //更新会员状态(启用)
     public int modifyStatus(int customerId) {
         int i = this.customerMapper.modifyStatus(customerId);
 //        System.out.println(customerId);
