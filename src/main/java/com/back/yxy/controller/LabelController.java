@@ -46,7 +46,7 @@ public class LabelController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "batchDel",method = RequestMethod.POST)
+    @RequestMapping(value = "batchDelLabel",method = RequestMethod.POST)
     public int batchDel(@RequestBody String[] ids) {
         return labelService.batchDel(ids);
     }

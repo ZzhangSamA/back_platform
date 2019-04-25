@@ -1,5 +1,6 @@
 package com.back.rsx.tools;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 public class UploadFileKit {
 
-    public String UploadFile(CommonsMultipartFile uploadFile, HttpServletRequest request) {
+    public String UploadFile(MultipartFile uploadFile, HttpServletRequest request) {
         // 获取上传的原始文件名
         String fileName = uploadFile.getOriginalFilename();
         // 设置文件上传路径

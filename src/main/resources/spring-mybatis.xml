@@ -36,8 +36,8 @@
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
-    <!-- 6、注解配置事务扩散机制 -->
-    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+     <!--6、注解配置事务扩散机制-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
     <!--&lt;!&ndash; 6、xml配置事务扩散机制 &ndash;&gt;-->
     <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
     <!--<tx:attributes >-->

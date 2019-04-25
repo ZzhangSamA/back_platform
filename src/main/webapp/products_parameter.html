@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="js/html5.js"></script>
+    <script type="text/javascript" src="js/respond.min.js"></script>
+    <script type="text/javascript" src="js/PIE_IE678.js"></script>
+    <![endif]-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css"/>
+    <link href="assets/css/codemirror.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <link href="Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
+    <link href="Widget/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+
+    <title>修改商品参数</title>
+</head>
+<body>
+<div class="clearfix" id="add_picture">
+    <div class="page_right_style">
+        <div class="type_title" style="width: 500px">修改商品参数</div><br/>
+        <div id="parameterList">
+            <!--&nbsp;&nbsp;<label style="width: 190px">参数名</label><label style="width: 190px">原价</label><label style="width: 190px">库存</label><label style="width: 190px">现价</label><br/>-->
+            <!--<input type="text" name="parameterName" placeholder="参数名">-->
+            <!--<input type="text" name="parameterPrice" placeholder="原价">-->
+            <!--<input type="text" name="stock" placeholder="库存">-->
+            <!--<input type="text" name="preferentialPrice" placeholder="现价"><br/>-->
+        </div>
+        <br/>
+        <button class="btn btn-warning Order_form" onclick="addInput()"><i class="icon-plus"></i>新增参数</button>
+        <br/><br/>
+        <button type="button" class="btn btn-primary radius" onclick="submitParameter()"><i class="icon-save "></i>确认修改</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="Products_List.html"><button class="btn btn-default radius" type="button">取消</button> </a>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/typeahead-bs2.min.js"></script>
+<script src="assets/layer/layer.js" type="text/javascript" ></script>
+<script src="assets/laydate/laydate.js" type="text/javascript"></script>
+<script type="text/javascript" src="Widget/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="Widget/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript" src="Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript" src="Widget/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="Widget/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script src="js/lrtk.js" type="text/javascript" ></script>
+<link rel="stylesheet" href="plugins/wangeditor/min/wangEditor.min.css" />
+<script src="plugins/wangeditor/min/wangEditor.min.js"></script>
+<script src="jquery/jquery-2.1.1.min.js"></script>
+
+<script>
+
+    var goods_id = window.location.search;
+    goods_id = goods_id.split("=")[1];
+
+    /**商品参数信息回显**/
+    $.ajax({
+        type:'POST',
+        url:'getParameterByGoodsId',
+        contentType:'application/json;charset=utf-8',
+        data:JSON.stringify(
+            goods_id
+        ),
+        success:function (response) {
+            console.log(response);
+            $(response).each(function (index, item) {
+                $("#parameterList").append("<div>&nbsp;"+(index+1)+"、<label style=\"width: 180px\">参数名</label><label style=\"width: 180px\">原价</label><label style=\"width: 180px\">库存</label><label style=\"width: 180px\">现价</label><br/>\n" +
+                    "<input type=\"text\" name=\"parameterName\" placeholder=\"参数名\" value='"+item.parameterName+"'>\n" +
+                    "<input type=\"text\" name=\"parameterPrice\" placeholder=\"原价\" value='"+item.parameterPrice+"'>\n" +
+                    "<input type=\"text\" name=\"stock\" placeholder=\"库存\" value='"+item.stock+"'>\n" +
+                    "<input type=\"text\" name=\"preferentialPrice\" placeholder=\"现价\" value='"+item.preferentialPrice+"'>" +
+                    "<a onclick=\"deleteInput(this)\" class=\"btn btn-danger\"><i class=\"icon-trash\"></i>删除</a></div><br/>");
+            })
+        },
+        error:function (response) {
+            console.log(response);
+        },
+        dataType:'json'
+    });
+
+    function addInput() {
+        $("#parameterList").append("&nbsp;&nbsp;<label style=\"width: 180px\">参数名</label><label style=\"width: 180px\">原价</label><label style=\"width: 180px\">库存</label><label style=\"width: 180px\">现价</label><br/>\n" +
+            "            <input type=\"text\" name=\"parameterName\" placeholder=\"参数名\">\n" +
+            "            <input type=\"text\" name=\"parameterPrice\" placeholder=\"原价\">\n" +
+            "            <input type=\"text\" name=\"stock\" placeholder=\"库存\">\n" +
+            "            <input type=\"text\" name=\"preferentialPrice\" placeholder=\"现价\">" +
+            "<a onclick=\"deleteInput(this)\" class=\"btn btn-danger\"><i class=\"icon-trash\"></i>删除</a><br/>")
+    }
+
+    function deleteInput(obj) {
+        $(obj).parent("div").remove();
+    }
+
+    function submitParameter() {
+        var len = document.getElementsByName("parameterName");
+        len = len.length;
+        $.ajax({
+            type: 'POST',
+            url: 'deleteParameterByGoodsId',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(
+                goods_id
+            ),
+            success:function (response) {
+                console.log(response);
+            },
+            error:function (response) {
+                console.log(response)
+            },
+            dataType:'json'
+        });
+        for(var i = 0;i < len;i++) {
+            var parameterName = document.getElementsByName("parameterName")[i].value;
+            var parameterPrice = document.getElementsByName("parameterPrice")[i].value;
+            var stock = document.getElementsByName("stock")[i].value;
+            var preferentialPrice = document.getElementsByName("preferentialPrice")[i].value;
+            $.ajax({
+                type: 'POST',
+                url: 'insertGoodsParameter',
+                contentType: 'application/json;charset=utf-8',
+                async:false,
+                data: JSON.stringify({
+                    "goodsId":goods_id,
+                    "parameterName":parameterName,
+                    "parameterPrice":parameterPrice,
+                    "stock":stock,
+                    "preferentialPrice":preferentialPrice
+                }),
+                success:function (response) {
+                    console.log(response);
+                },
+                error:function (response) {
+                    console.log(response);
+                },
+                dataType:'json'
+            });
+        }
+        location.href="Products_List.html";
+    }
+</script>
+</html>

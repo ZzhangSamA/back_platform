@@ -12,4 +12,60 @@
     <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
 
+  <insert id="addParameter" parameterType="map">
+    insert into goods_parameter values (default ,#{goodsId},#{parameterName},default ,#{parameterPrice},default ,default )
+  </insert>
+
+  <select id="getParameterByGoodsId" parameterType="Integer" resultMap="BaseResultMap">
+    select * from goods_parameter where status=1 and goods_id=#{goodsId}
+  </select>
+
+  <update id="deleteParameterByGoodsId" parameterType="Integer">
+    update goods_parameter set status = 0 where goods_id = #{goodsId}
+  </update>
+
+  <insert id="insertGoodsParameter" parameterType="com.back.rsx.pojo.GoodsParameter">
+    insert into goods_parameter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="parameterName != null" >
+        parameter_name,
+      </if>
+      <if test="parameterPrice != null" >
+        parameter_price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="preferentialPrice != null" >
+        preferential_price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId},
+      </if>
+      <if test="parameterName != null" >
+        #{parameterName},
+      </if>
+      <if test="parameterPrice != null" >
+        #{parameterPrice},
+      </if>
+      <if test="stock != null" >
+        #{stock},
+      </if>
+      <if test="preferentialPrice != null" >
+        #{preferentialPrice},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+    </trim>
+  </insert>
+
 </mapper>
