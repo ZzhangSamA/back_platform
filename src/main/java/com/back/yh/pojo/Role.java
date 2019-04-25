@@ -8,8 +8,27 @@ public class Role {
     int roleId;
     String roleName;
     String createTime;
+    String updateTime;
     int status;
-    List<User> userList;
+    List<String> userList;
+
+    List<String> menuList;
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updataTime) {
+        this.updateTime = updataTime;
+    }
+
+    public List<String> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<String> menuList) {
+        this.menuList = menuList;
+    }
 
     public String getCreateTime() {
         return createTime;
@@ -19,11 +38,11 @@ public class Role {
         this.createTime = createTime;
     }
 
-    public List<User> getUserList() {
+    public List<String> getUserList() {
         return userList;
     }
 
-    public void setUserList(List<User> userList) {
+    public void setUserList(List<String> userList) {
         this.userList = userList;
     }
 
@@ -56,8 +75,11 @@ public class Role {
         return "Role{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
-                ", creatTime='" + createTime + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updataTime='" + updateTime + '\'' +
                 ", status=" + status +
+                ", userList=" + userList +
+                ", menuList=" + menuList +
                 '}';
     }
 }
