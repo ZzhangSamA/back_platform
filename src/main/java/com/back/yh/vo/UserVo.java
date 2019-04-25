@@ -2,6 +2,7 @@ package com.back.yh.vo;
 
 import com.back.tools.SplitPage;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserVo {
@@ -15,7 +16,7 @@ public class UserVo {
 
     private String telephone;
 
-    private Date createTime;
+    private String createTime;
 
     private Integer status;
 
@@ -61,12 +62,24 @@ public class UserVo {
         this.telephone = telephone;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        if(createTime==null){
+            this.createTime = null;
+            return;
+        }
+        String dateStr = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            dateStr = sdf.format(createTime);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        this.createTime = dateStr;
     }
 
     public SplitPage getSplitPage() {

@@ -587,9 +587,9 @@ body
 /*********管理员样式属性***********/
 #add_administrator_style{ padding:10px;}
 .administrator_style{ border-top:1px solid #dddddd; border-right:1px solid #dddddd; border-left:1px solid #dddddd;}
-.administrator_style .table_menu_list{float: right; margin-left: 220px;overflow: auto;position: absolute;  padding-left:10px;}
+/*.administrator_style .table_menu_list{float: right; margin-left: 220px;overflow: auto;position: absolute;  padding-left:10px;}*/
 .administrator_style .table_menu_list.Widescreen{ margin-left:0px;}
-.admin_info_style .text_info{    
+.admin_info_style .text_info{
     height: 30px;
     padding: 3px;
     background-color: #FFF;

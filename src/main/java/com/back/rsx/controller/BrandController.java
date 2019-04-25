@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,17 @@ public class BrandController {
         brand.setBrandNumber(request.getParameter("brandNumber"));
         UploadFileKit fileKit = new UploadFileKit();
         String fileName= fileKit.UploadFile(uploadFile,request);
-        brand.setBrandIcon(fileName);
+        InetAddress ia=null;
+        try {
+            ia = ia.getLocalHost();
+            System.out.println(ia.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        // 获取服务端路径
+        String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
+        System.out.println(serverPath);
+        brand.setBrandIcon(serverPath + "/"+fileName);
         System.out.println(brand);
 //
         return brandService.addBrand(brand);
@@ -73,6 +85,18 @@ public class BrandController {
         UploadFileKit fileKit = new UploadFileKit();
         if (uploadFile.getSize()!=0){
             icon= fileKit.UploadFile(uploadFile,request);
+            InetAddress ia=null;
+            try {
+                ia = ia.getLocalHost();
+                System.out.println(ia.getHostAddress());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            // 获取服务端路径
+            String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
+
+             icon = serverPath + "/"+icon;
+
         }
         Brand brand = new Brand();
         brand.setBrandName(brandName);

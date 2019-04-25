@@ -114,7 +114,7 @@
                        $("#brandName").val(responseText.brandName);
                        $("#supplierDate").val(responseText.supplierId);
                         $("#oldBrandIcon").val(responseText.brandIcon)
-                        $("#goods_pic").attr("src","products/logo/"+responseText.brandIcon);
+                        $("#goods_pic").attr("src",responseText.brandIcon);
 
                     },
                     error: function (message) {

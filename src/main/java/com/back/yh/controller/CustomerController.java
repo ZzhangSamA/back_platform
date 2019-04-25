@@ -45,14 +45,14 @@ public class CustomerController {
 //        System.out.println(customerDto);
         return customerDto;
     }
-
+    //更新会员状态(禁用)
     @RequestMapping(value = "updateStatus" ,method = RequestMethod.POST)
     public Object updateStatus(@RequestBody Customer customer){
         int i = this.customerService.updateStatus(customer.getCustomerId());
 //        System.out.println(i);
         return i;
     }
-
+    //更新会员状态(启用)
     @RequestMapping(value = "modifyStatus" ,method = RequestMethod.POST)
     public Object modifyStatus(@RequestBody Customer customer){
         int i = this.customerService.modifyStatus(customer.getCustomerId());

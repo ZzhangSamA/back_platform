@@ -24,7 +24,7 @@ public class User {
     private String telephone;
 
 
-    private Date createTime;
+    private String createTime;
 
 
     private Date updateTime;
@@ -34,12 +34,24 @@ public class User {
 
     List<Role> roleList;
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        if(createTime==null){
+            this.createTime = null;
+            return;
+        }
+        String dateStr = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            dateStr = sdf.format(createTime);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        this.createTime = dateStr;
     }
 
     public List<Role> getRoleList() {

@@ -3,6 +3,7 @@ package com.back.rsx.vo;
 import com.back.rsx.tools.SplitePageBean;
 
 public class GoodsInfoVo {
+    private Integer goodsId;
     private String createTime;
     private String goodsName;
     private SplitePageBean splitePageBean;
@@ -15,9 +16,6 @@ public class GoodsInfoVo {
         this.createTime = createTime;
     }
 
-    public String getBrandName() {
-        return goodsName;
-    }
 
     public void setBrandName(String goodsName) {
         this.goodsName = goodsName;
@@ -29,6 +27,22 @@ public class GoodsInfoVo {
 
     public void setSplitePageBean(SplitePageBean splitePageBean) {
         this.splitePageBean = splitePageBean;
+    }
+
+    public Integer getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
     @Override

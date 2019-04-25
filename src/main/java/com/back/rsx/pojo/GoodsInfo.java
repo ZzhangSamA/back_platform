@@ -1,5 +1,6 @@
 package com.back.rsx.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class GoodsInfo {
@@ -25,13 +26,13 @@ public class GoodsInfo {
 
     private String goodsDetails;
 
-    private Double showPrice;
+    private BigDecimal showPrice;
 
-    public Double getShowPrice() {
+    public BigDecimal getShowPrice() {
         return showPrice;
     }
 
-    public void setShowPrice(Double showPrice) {
+    public void setShowPrice(BigDecimal showPrice) {
         this.showPrice = showPrice;
     }
 
