@@ -184,7 +184,6 @@ public class GoodsInfoController {
         }
         // 获取服务端路径
         String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
-        System.out.println(serverPath);
         s = fileKit.UploadFile(uploadFile,request);
         s = serverPath + "/"+s;
         goodsImg.setGoodsImage(s);
