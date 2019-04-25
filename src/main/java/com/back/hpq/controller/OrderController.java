@@ -9,10 +9,7 @@ import com.back.hpq.vo.OrderInfoVo;
 import com.back.tools.SplitPage;
 import com.back.yh.pojo.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -98,4 +95,15 @@ public class OrderController {
         return flag;
     }
 
+    /**
+     * 根据订单编号获取订单对象
+     * @param tOrder
+     * @return
+     */
+    @RequestMapping(value = "getOrderByOrderNumber",method = RequestMethod.POST)
+    public Object getOrderByOrderNumber(@RequestBody(required = false) TOrder tOrder) {
+        TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
+        System.out.println(order);
+        return order;
+    }
 }
