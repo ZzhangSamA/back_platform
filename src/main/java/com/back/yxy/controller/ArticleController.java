@@ -24,12 +24,22 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    /**
+     * 根据文章分类id获得该类文章总数
+     * @param articleLabel——labelId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getCountByLabelId",method = RequestMethod.POST)
     public int getCountByLabelId(@RequestBody ArticleLabel articleLabel) {
         return articleService.getCountByLabelId(articleLabel);
     }
 
+    /**
+     * 初始化文章列表（含搜索分页）
+     * @param blogArticle
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "initArticlePage",method = RequestMethod.POST)
     public Object initArticlePage(@RequestBody BlogArticle blogArticle) {
@@ -43,13 +53,26 @@ public class ArticleController {
         return articleVo;
     }
 
+    /**
+     * 根据文章ID删除文章（假删除 status=0）
+     * @param blogArticle
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "updateArticleByPrimaryKeySelective",method = RequestMethod.POST)
     public String updateByPrimaryKeySelective(@RequestBody BlogArticle blogArticle) {
         return articleService.updateByPrimaryKeySelective(blogArticle).toString();
     }
 
+
     static String UPLOAD_PATH = "/static/upload/";
+
+    /**
+     * 富文本编辑器上传文本与图片
+     * @param editorFile
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "upload1", method = RequestMethod.POST)
     public Map<String, Object> upload1(MultipartFile editorFile, HttpServletRequest request) {
@@ -93,29 +116,53 @@ public class ArticleController {
         return result;
     }
 
+    /**
+     * 添加文章
+     * @param blogArticle
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "addArticle",method = RequestMethod.POST)
     public String addArticle(@RequestBody BlogArticle blogArticle) {
         return articleService.insertSelective(blogArticle).toString();
     }
 
+    /**
+     * 根据文章Id获取该文章的所有分类Id
+     * @param articleLabel——articleId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getLabelIdByArticleId",method = RequestMethod.POST)
     public Object getLabelIdByArticleId(@RequestBody ArticleLabel articleLabel) {
         return articleService.getLabelIdByArticleId(articleLabel);
     }
+
+    /**
+     * 根据文章Id获取文章
+     * @param articleId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getArticleByArticleId",method = RequestMethod.POST)
     public Object getArticleByArticleId(@RequestBody Integer articleId) {
         return articleService.selectByPrimaryKey(articleId);
     }
 
+    /**
+     * 编辑修改原有文章
+     * @param blogArticle
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "updateArticle",method = RequestMethod.POST)
     public String updateArticle(@RequestBody BlogArticle blogArticle) {
         return articleService.updateArticle(blogArticle).toString();
     }
 
+    /**
+     * 文章封面图的添加与修改
+     */
     static String COVER_PATH = "/static/cover/";
     @RequestMapping("fileUpload")
     public void fileUpload (@RequestParam("uploadFile") CommonsMultipartFile CMFile, HttpServletResponse response,HttpServletRequest request) throws IOException {
