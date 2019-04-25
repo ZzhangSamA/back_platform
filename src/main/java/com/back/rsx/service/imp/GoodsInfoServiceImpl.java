@@ -42,4 +42,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     public int deleteBySel(Map map) {
         return goodsInfoMapper.deleteBySel(map);
     }
+
+    public GoodsInfo getGoodsById(Integer goodsId) {
+        return goodsInfoMapper.getGoodsById(goodsId);
+    }
+
+    public int updateGoodsInfo(GoodsInfo goodsInfo) {
+        return goodsInfoMapper.updateGoodsInfo(goodsInfo);
+    }
 }

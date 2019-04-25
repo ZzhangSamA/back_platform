@@ -3,10 +3,7 @@ package com.back.rsx.controller;
 import com.back.rsx.pojo.GoodsType;
 import com.back.rsx.service.GoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -44,6 +41,12 @@ public class GoodsTypeController {
     @RequestMapping(value = "addGoodsType",method = RequestMethod.POST)
     public Object addGoodsType(@RequestBody(required = false) GoodsType goodsType){
         return goodsTypeService.addGoodsType(goodsType);
+
+    }
+    @RequestMapping(value = "getParentId",method = RequestMethod.POST)
+    public Object getParentId(@RequestParam(value = "goodsTypeId") int goodsTypeId){
+        return goodsTypeService.getParentId(goodsTypeId);
+
     }
 
 }

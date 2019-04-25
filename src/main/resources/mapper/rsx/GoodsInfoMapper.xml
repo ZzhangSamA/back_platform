@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.back.rsx.mapper.GoodsInfoMapper">
+
   <resultMap id="BaseResultMap" type="com.back.rsx.pojo.GoodsInfo">
     <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
     <result column="goods_title" jdbcType="VARCHAR" property="goodsTitle" />
@@ -9,7 +10,8 @@
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="goods_number" jdbcType="VARCHAR" property="goodsNumber" />
     <result column="stock" jdbcType="INTEGER" property="stock" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="show_price" property="showPrice"/>
+    <result column="goods_details" property="goodsDetails"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -59,6 +61,39 @@
     values (default ,#{goodsTitle},#{goodsName},#{goodsTypeId},#{brandId},#{goodsNumber},default ,#{showPrice},default ,default ,#{goodsDetails},1)
 
   </insert>
+  <update id="updateGoodsInfo" parameterType="com.back.rsx.pojo.GoodsInfo">
+    update goods_info
+    <set>
+      <if test="goodsTitle !=null and goodsTitle!=''">
+        goods_title=#{goodsTitle},
+      </if>
+      <if test="goodsName !=null and goodsName!=''">
+        goods_name=#{goodsName},
+      </if>
+      <if test="goodsTypeId !=null and goodsTypeId!=''">
+        goods_type_id=#{goodsTypeId},
+      </if>
+      <if test="brandId !=null and brandId!=''">
+        brand_id=#{brandId},
+      </if>
+      <if test="goodsNumber !=null and goodsNumber!=''">
+        goods_number=#{goodsNumber},
+      </if>
+      <if test="showPrice !=null and showPrice!=''">
+        show_price=#{showPrice},
+      </if>
+      <if test="goodsDetails !=null and goodsDetails!=''">
+        goods_details=#{goodsDetails},
+      </if>
+      <if test="true">
+        update_time = now(),
+      </if>
+    </set>
+      where goods_id  = #{goodsId}
+
+  </update>
+
+
   <update id="deleteGoodsById" parameterType="com.back.rsx.pojo.GoodsInfo">
         update goods_info set status = 0 ,update_time = now() where goods_id =#{goodsId}
   </update>
@@ -69,4 +104,7 @@
     </foreach>
   </update>
 
+  <select id="getGoodsById" parameterType="Integer" resultMap="BaseResultMap">
+      select * from goods_info where goods_id = #{goodsId} and status=1
+  </select>
 </mapper>

@@ -11,5 +11,14 @@
   <insert id="addImgByGoodsId" parameterType="map">
     insert into goods_img values (default ,#{goodsId},#{imgName},#{isCover})
   </insert>
+  <insert id="addImgByGoodsIdGetImgId" parameterType="com.back.rsx.pojo.GoodsImg" useGeneratedKeys="true" keyProperty="imgId">
+    insert into goods_img values (default ,#{goodsId},#{goodsImage},#{isCover})
+  </insert>
 
+  <select id="getImageById" parameterType="int" resultMap="BaseResultMap">
+    select * from goods_img where goods_id = #{godosId}
+  </select>
+  <update id="updateImgBy" parameterType="com.back.rsx.pojo.GoodsImg">
+    update goods_img set goods_image=#{goodsImage} where img_id =#{imgId}
+  </update>
 </mapper>

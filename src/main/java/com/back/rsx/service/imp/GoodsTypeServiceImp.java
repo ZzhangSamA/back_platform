@@ -38,6 +38,10 @@ public class GoodsTypeServiceImp implements GoodsTypeService {
         return goodsTypeMapper.addGoodsType(goodsType);
     }
 
+    public int getParentId(int goodsTypeId) {
+        return goodsTypeMapper.getParentId(goodsTypeId);
+    }
+
 
 }
 
