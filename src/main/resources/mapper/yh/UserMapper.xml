@@ -64,8 +64,8 @@
     <if test="email!=null and email !=''">
       and email = #{email}
     </if>
-    <if test="email!=null and email !=''">
-      and DATE_Format(user.create_time,"%Y-%c-%d")create_time = #{createTime}
+    <if test="createTime!=null and createTime !=''">
+      and create_time like concat(#{createTime},'%')
     </if>
     limit #{splitPage.start},#{splitPage.pageSize}
 
@@ -79,6 +79,41 @@
   <select id="getUser" parameterType="int" resultMap="UserResultMap">
     select * from user where status=1 and user_id=#{userId}
   </select>
+
+  <!--修改-->
+  <update id="updateUser" parameterType="com.back.yh.pojo.User">
+        update user <set>
+    <if test="userName!=null and userName!=''">
+      user_name=#{userName},
+    </if>
+    <if test="userNumber!=null and userNumber!=''">
+    user_number=#{userNumber},
+    </if>
+    <if test="email!=null and email!=''">
+      email=#{email},
+    </if>
+    <if test="telephone!=null and telephone!=''">
+      telephone=#{telephone}
+    </if>
+  </set>
+   where user_id=#{userId}
+    </update>
+
+  <!--单个删除-->
+  <update id="delUser" parameterType="int">
+    update user set status=0 where user_id=#{userId}
+  </update>
+
+  <!--批量删除-->
+  <update id="batchDelUser" parameterType="Map">
+    update user set status = 0
+    <where>
+      user_id in
+      <foreach collection="ids" item="userId" open="(" close=")" separator=",">
+        #{userId}
+      </foreach>
+    </where>
+  </update>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--
