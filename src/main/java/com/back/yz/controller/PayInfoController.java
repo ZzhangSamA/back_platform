@@ -3,7 +3,6 @@ package com.back.yz.controller;
 import com.back.yxy.pojo.Page;
 import com.back.yz.dto.PageDto;
 import com.back.yz.dto.PayInfoDto;
-import com.back.yz.pojo.PayInfo;
 import com.back.yz.service.PayInfoService;
 import com.back.yz.vo.PayInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
