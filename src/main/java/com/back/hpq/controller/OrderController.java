@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @RestController
 public class OrderController {
@@ -89,6 +90,10 @@ public class OrderController {
         if (tOrder == null) {
             return false + "";
         }
+        //修改订单状态为：待收货
+        tOrder.setStatus(3);
+        //设置发货时间：获取当前时间
+        tOrder.setConsignTime(new Date());
         flag = orderService.updateByPrimaryKeySelective(tOrder);
         return flag;
     }
