@@ -67,7 +67,7 @@ public class OrderController {
     /**
      * 发货
      * @param tOrder{
-     *                  orderId:订单id,
+     *                  orderNumber:订单id,
      *                  expCode:物流公司编号,
      *                  expNo:物流单号
      *              }
@@ -78,11 +78,16 @@ public class OrderController {
         if (tOrder == null) {
             return false + "";
         }
+        //通过orderNumber获取Order对象
+        TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
         //修改订单状态为：待收货
-        tOrder.setStatus(3);
+        order.setStatus(3);
         //设置发货时间：获取当前时间
-        tOrder.setConsignTime(new Date());
-        flag = orderService.updateByPrimaryKeySelective(tOrder);
+        order.setConsignTime(new Date());
+        //设置物流属性
+        order.setExpCode(tOrder.getExpCode());
+        order.setExpNo(tOrder.getExpNo());
+        flag = orderService.updateByPrimaryKeySelective(order);
         return flag;
     }
 
@@ -94,7 +99,6 @@ public class OrderController {
     @RequestMapping(value = "getOrderByOrderNumber",method = RequestMethod.POST)
     public Object getOrderByOrderNumber(@RequestBody(required = false) TOrder tOrder) {
         TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
-        System.out.println(order);
         return order;
     }
 }
