@@ -1,11 +1,22 @@
 package com.back.yh.vo;
 
+import java.util.Date;
+
 public class RoleVo {
 
     private String roleName;
     private String[] users;
     private String[] menus;
     private int roleId;
+    private Date updateTime;
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public int getRoleId() {
         return roleId;

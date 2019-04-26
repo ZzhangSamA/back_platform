@@ -23,14 +23,8 @@ public class OrderController {
 
     @RequestMapping(value = "getOrders",method = RequestMethod.POST)
     public Object getOrders(@RequestBody(required = false)SplitPage splitPage, HttpSession httpSession){
-        OrderInfoVo orderInfoVo = new OrderInfoVo();
-        Customer customer1 = new Customer();
-        customer1.setCustomerId(2);
-        httpSession.setAttribute("customer",customer1);
-        Customer customer = (Customer)httpSession.getAttribute("customer");
-        orderInfoVo.setCustomer(customer);
-        orderInfoVo.setSplitPage(splitPage);
-        return orderService.getOrders(orderInfoVo);
+
+        return orderService.getOrders(splitPage);
 
     }
     @RequestMapping(value = "delivery",method = RequestMethod.POST)
@@ -46,9 +40,6 @@ public class OrderController {
     }
     @RequestMapping(value = "getOrderDetail",method = RequestMethod.POST)
     public Object getOrderDetail(@RequestBody(required = false)TOrder tOrder, HttpSession httpSession){
-        Customer customer1 = new Customer();
-        customer1.setCustomerId(2);
-        httpSession.setAttribute("customer",customer1);
         Customer customer = (Customer)httpSession.getAttribute("customer");
         Integer customerId = customer.getCustomerId();
         tOrder.setCustomerId(customerId);
@@ -76,7 +67,7 @@ public class OrderController {
     /**
      * 发货
      * @param tOrder{
-     *                  orderId:订单id,
+     *                  orderNumber:订单id,
      *                  expCode:物流公司编号,
      *                  expNo:物流单号
      *              }
@@ -87,11 +78,16 @@ public class OrderController {
         if (tOrder == null) {
             return false + "";
         }
+        //通过orderNumber获取Order对象
+        TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
         //修改订单状态为：待收货
-        tOrder.setStatus(3);
+        order.setStatus(3);
         //设置发货时间：获取当前时间
-        tOrder.setConsignTime(new Date());
-        flag = orderService.updateByPrimaryKeySelective(tOrder);
+        order.setConsignTime(new Date());
+        //设置物流属性
+        order.setExpCode(tOrder.getExpCode());
+        order.setExpNo(tOrder.getExpNo());
+        flag = orderService.updateByPrimaryKeySelective(order);
         return flag;
     }
 
@@ -103,7 +99,9 @@ public class OrderController {
     @RequestMapping(value = "getOrderByOrderNumber",method = RequestMethod.POST)
     public Object getOrderByOrderNumber(@RequestBody(required = false) TOrder tOrder) {
         TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
-        System.out.println(order);
+        if (order == null) {
+            return false + "";
+        }
         return order;
     }
 }

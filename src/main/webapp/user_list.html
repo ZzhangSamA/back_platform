@@ -58,7 +58,7 @@
      
       <ul class="search_content clearfix">
        <li><label class="l_f">会员名称</label><input name="" type="text"  class="text_add" placeholder="输入会员名称"  style=" width:400px" id="customerName"/></li>
-       <!--<li><label class="l_f">添加时间</label><input class="inline laydate-icon" id="start" style=" margin-left:10px;"></li>-->
+       <li><label class="l_f">添加时间</label><input class="inline laydate-icon" id="start" style=" margin-left:10px;"></li>
        <li style="width:90px;"><button type="button" class="btn_search" onclick="initPage(1)"><i class="icon-search"></i>查询</button></li>
       </ul>
     </div>
@@ -74,7 +74,7 @@
 				<th width="150">生日</th>
 				<th width="30">性别</th>
                 <th width="120">手机号</th>
-				<!--<th width="150">加入时间</th>-->
+				<th width="150">加入时间</th>
 				<th width="70">状态</th>
 				<th width="200">操作</th>
 			</tr>
@@ -144,10 +144,10 @@
             return 'left';
         }
     })
-    // laydate({
-    //     elem: '#start',
-    //     event: 'focus'
-    // });
+    laydate({
+        elem: '#start',
+        event: 'focus'
+    });
 
     //分页
     function initPage(currentPage){
@@ -155,7 +155,7 @@
 
         //1.取得查询的条件值
          var customerName=$("#customerName").val().trim();
-         // var createTime=$("#start").val().trim();
+         var createTime=$("#start").val().trim();
 
 
         $.ajax({
@@ -219,7 +219,7 @@
                         "<td>"+item.birthday+"</td>"+
                         "<td>"+sexs+"</td>"+
                         "<td>"+item.telephone+"</td>"+
-                        // "<td>"+item.createTime+"</td>"+
+                        "<td>"+item.createTime+"</td>"+
                         "<td class='td-status'><span class='label label-success radius' id='span'>"+statuss+"</span></td>"+
                         "<td class='td-manage'>"+
                         "<a onClick='member_stop("+item.customerId+")'  href='javascript:;' title='停用'  class='btn btn-xs btn-success'><i class='icon-ok bigger-120'>禁用</i></a>"+
