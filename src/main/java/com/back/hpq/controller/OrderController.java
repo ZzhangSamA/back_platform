@@ -9,15 +9,14 @@ import com.back.hpq.vo.OrderInfoVo;
 import com.back.tools.SplitPage;
 import com.back.yh.pojo.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @RestController
 public class OrderController {
+    Boolean flag;
 
     @Autowired(required = false)
     OrderService orderService;
@@ -65,4 +64,37 @@ public class OrderController {
         return refuseGoods;
     }
 
+    /**
+     * 发货
+     * @param tOrder{
+     *                  orderId:订单id,
+     *                  expCode:物流公司编号,
+     *                  expNo:物流单号
+     *              }
+     * @return
+     */
+    @RequestMapping(value = "setExpress",method = RequestMethod.POST)
+    public Object setExpress(@RequestBody(required = false)TOrder tOrder) {
+        if (tOrder == null) {
+            return false + "";
+        }
+        //修改订单状态为：待收货
+        tOrder.setStatus(3);
+        //设置发货时间：获取当前时间
+        tOrder.setConsignTime(new Date());
+        flag = orderService.updateByPrimaryKeySelective(tOrder);
+        return flag;
+    }
+
+    /**
+     * 根据订单编号获取订单对象
+     * @param tOrder
+     * @return
+     */
+    @RequestMapping(value = "getOrderByOrderNumber",method = RequestMethod.POST)
+    public Object getOrderByOrderNumber(@RequestBody(required = false) TOrder tOrder) {
+        TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
+        System.out.println(order);
+        return order;
+    }
 }
