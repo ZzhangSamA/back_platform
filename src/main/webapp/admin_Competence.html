@@ -222,7 +222,7 @@ function Competence_modify(id){
                         "\t\t\t\t<td>" + item.userList + "</td>\n" +
                         "\t\t\t\t<td>"+item.menuList+"</td>\n" +
                         "\t\t\t\t  <td>"+item.createTime+"</td>\n" +
-                        "\t\t\t\t  <td>"+item.updataTime+"</td>\n" +
+                        "\t\t\t\t  <td>"+(item.updateTime==null?"未更新":item.updateTime)+"</td>\n" +
                         "\t\t\t\t<td>\n" +
                         "                 <a title=\"编辑\" onclick=\"Competence_modify("+item.roleId+")\" href=\"javascript:;\"  class=\"btn btn-xs btn-info\" ><i class=\"fa fa-edit bigger-120\"></i></a>        \n" +
                         "                 <a title=\"删除\" href=\"javascript:;\"  onclick=\"Competence_del(this,"+item.roleId+")\" class=\"btn btn-xs btn-warning\" ><i class=\"fa fa-trash  bigger-120\"></i></a>\n" +
