@@ -99,6 +99,9 @@ public class OrderController {
     @RequestMapping(value = "getOrderByOrderNumber",method = RequestMethod.POST)
     public Object getOrderByOrderNumber(@RequestBody(required = false) TOrder tOrder) {
         TOrder order = orderService.getOrderByOrderNumber(tOrder.getOrderNumber());
+        if (order == null) {
+            return false + "";
+        }
         return order;
     }
 }
