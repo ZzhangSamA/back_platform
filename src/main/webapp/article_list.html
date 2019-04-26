@@ -288,7 +288,7 @@ function member_del(obj,id){
                         "          <td>"+item.article_title+"</td>\n" +
                         "          <td>"+item.label_name+"</td>\n" +
                         "          <td>"+item.create_time+"</td>\n" +
-                        "          <td>"+item.update_time+"</td>\n" +
+                        "          <td>"+(item.updateTime==null?"未更新":item.updateTime)+"</td>\n" +
                         "          <td>启用</td>\n" +
                         "          <td class=\"td-manage\">   \n" +
                         "           <a title=\"编辑\" onclick=\"location.href='article_edit.html?article_id="+item.article_id+"'\" href=\"javascript:;\"  class=\"btn btn-xs btn-info\" ><i class=\"fa fa-edit bigger-120\"></i></a>\n" +

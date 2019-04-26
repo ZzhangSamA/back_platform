@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -63,6 +64,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public Boolean updateRole(RoleVo roleVo) {
         //根据roleId删除所有相关数据
+        roleVo.setUpdateTime(new Date());
         int i = roleMapper.updateRole(roleVo);
         if(!(i > 0)) {
             return false;

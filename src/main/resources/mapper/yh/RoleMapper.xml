@@ -80,13 +80,13 @@
 
     <select id="getMenuByRoleId" resultMap="MenuResultMap" parameterType="int">
         SELECT m.menu_id,m.menu_name from role_menu rm LEFT JOIN menu m on rm.menu_id=m.menu_id
-        and rm.`status`=1 and m.`status`=1
-        where rm.role_id = #{roleId}
+         and m.`status`=1
+        where rm.role_id = #{roleId} and rm.`status`=1
     </select>
     <select id="getUserByRoleId" resultMap="UserResultMap" parameterType="int">
         SELECT u.user_id,u.user_name from user_role ur LEFT JOIN user u on ur.user_id=u.user_id
-        and ur.`status`=1 and u.`status`=1
-        where ur.role_id = #{roleId}
+         and u.`status`=1
+        where ur.role_id = #{roleId} and ur.`status`=1
     </select>
     <select id="getRoleByRoleId" resultMap="RoleResultMap2" parameterType="int">
         SELECT role.role_name from role
@@ -94,7 +94,7 @@
     </select>
 
     <update id="updateRole" parameterType="com.back.yh.vo.RoleVo">
-        update role set role_name=#{roleName} where role_id = #{roleId}
+        update role set role_name=#{roleName},update_time=#{updateTime} where role_id = #{roleId}
     </update>
     <update id="deleteRoleMenu" parameterType="int">
         update role_menu set status=0 where role_id = #{roleId}
