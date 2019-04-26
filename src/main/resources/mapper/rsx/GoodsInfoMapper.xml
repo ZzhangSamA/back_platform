@@ -58,7 +58,7 @@
   </select>
   <insert id="addGoodsInfo" parameterType="com.back.rsx.pojo.GoodsInfo" useGeneratedKeys="true" keyProperty="goodsId">
     insert into goods_info
-    values (default ,#{goodsTitle},#{goodsName},#{goodsTypeId},#{brandId},#{goodsNumber},default ,#{showPrice},default ,default ,#{goodsDetails},1)
+    values (default ,#{goodsTitle},#{goodsName},#{goodsTypeId},#{brandId},#{goodsNumber},default ,default ,default ,default ,#{goodsDetails},1)
 
   </insert>
   <update id="updateGoodsInfo" parameterType="com.back.rsx.pojo.GoodsInfo">

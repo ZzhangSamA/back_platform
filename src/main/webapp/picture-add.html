@@ -76,10 +76,6 @@
 				</select>
 				</span></div>
 			</div>
-            <div class="Add_p_s">
-             <label class="form-label col-2">展示价格：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="showPrice" name=""  >元</div>
-			</div>
 		</div>
 		<div class="clearfix cl">
 			<label class="form-label col-2">商品标题：</label>
@@ -216,7 +212,7 @@
     }
 	function addGoodsInfo(content) {
             /*var content = editor.txt.html();*/
-		if ($("#goodsTitle").val()&&$("#goodsName").val()&&$("#goodsType").val()&&$("#goodsBrand").val()&&$("#goodsNumber").val()&&content&&$("#showPrice").val()) {
+		if ($("#goodsTitle").val()&&$("#goodsName").val()&&$("#goodsType").val()&&$("#goodsBrand").val()&&$("#goodsNumber").val()&&$("#uploadFile").val()) {
         $.ajax({
             type: 'POST',
             url: 'addGoodsInfo',
@@ -228,8 +224,6 @@
 				"brandId":$("#goodsBrand").val(),
 				"goodsNumber":$("#goodsNumber").val(),
 				"goodsDetails":content,
-				"showPrice":$("#showPrice").val()
-
 
             }),
             success: function(responseText){

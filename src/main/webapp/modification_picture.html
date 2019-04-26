@@ -76,10 +76,6 @@
 				</select>
 				</span></div>
                 </div>
-                <div class="Add_p_s">
-                    <label class="form-label col-2">展示价格：</label>
-                    <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="showPrice" name=""  >元</div>
-                </div>
             </div>
             <div class="clearfix cl">
                 <label class="form-label col-2">商品标题：</label>
@@ -238,7 +234,7 @@
     }
     function updateGoodsInfo() {
         /*var content = editor.txt.html();*/
-        if ($("#goodsTitle").val()&&$("#goodsName").val()&&$("#goodsType").val()&&$("#goodsBrand").val()&&$("#goodsNumber").val()&&$("#showPrice").val()) {
+        if ($("#goodsTitle").val()&&$("#goodsName").val()&&$("#goodsType").val()&&$("#goodsBrand").val()&&$("#goodsNumber").val()) {
             $.ajax({
                 type: 'POST',
                 url: 'updateGoodsInfo',
@@ -250,7 +246,6 @@
                     "brandId":$("#goodsBrand").val(),
                     "goodsNumber":$("#goodsNumber").val(),
                     "goodsDetails": editor.txt.html(),
-                    "showPrice":$("#showPrice").val(),
                     "goodsId":window.location.search.split("=")[1]
 
 
@@ -337,7 +332,6 @@
                     "goodsId":goodsId
                 }),
                 success: function(responseText){
-                    $("#showPrice").val(responseText.showPrice);
                     $("#goodsNumber").val(responseText.goodsNumber);
                     $("#goodsBrand").val(responseText.brandId);
                     $("#goodsName").val(responseText.goodsName);
