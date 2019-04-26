@@ -94,7 +94,7 @@
     </select>
 
     <update id="updateRole" parameterType="com.back.yh.vo.RoleVo">
-        update role set role_name=#{roleName} where role_id = #{roleId}
+        update role set role_name=#{roleName},update_time=#{updateTime} where role_id = #{roleId}
     </update>
     <update id="deleteRoleMenu" parameterType="int">
         update role_menu set status=0 where role_id = #{roleId}
