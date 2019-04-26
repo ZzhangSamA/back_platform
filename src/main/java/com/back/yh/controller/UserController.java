@@ -24,7 +24,7 @@ public class UserController {
     public Object loginCheck(@RequestBody User user, HttpSession httpSession){
         Boolean flag=false;
         user.setPassword(Md5Utils.encodePassword(user.getPassword()));
-        System.out.println("userName="+user.getUserName()+",password="+user.getPassword());
+//        System.out.println("userName="+user.getUserName()+",password="+user.getPassword());
         User user1 = this.userService.loginCheck(user);
         if(user1!=null){
             //登录成功,保存
@@ -80,7 +80,7 @@ public class UserController {
     @RequestMapping(value = "getUser" ,method = RequestMethod.POST)
     public Object getUser(@RequestBody(required = false) User user){
         User user1 = this.userService.getUser(user.getUserId());
-        System.out.println(user1);
+//        System.out.println(user1);
         return user1;
     }
 
@@ -92,7 +92,7 @@ public class UserController {
     @RequestMapping(value = "updateUser" ,method = RequestMethod.POST)
     public Object updateUser(@RequestBody(required = false) User user){
         int i = this.userService.updateUser(user);
-        System.out.println(i);
+//        System.out.println(i);
         return i;
     }
 
@@ -104,7 +104,7 @@ public class UserController {
     @RequestMapping(value = "delUser" ,method = RequestMethod.POST)
     public Object delUser(@RequestBody(required = false) User user){
         int i = this.userService.delUser(user.getUserId());
-        System.out.println(i);
+//        System.out.println(i);
         return i;
     }
 
