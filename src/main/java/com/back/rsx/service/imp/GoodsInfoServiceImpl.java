@@ -50,4 +50,8 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     public int updateGoodsInfo(GoodsInfo goodsInfo) {
         return goodsInfoMapper.updateGoodsInfo(goodsInfo);
     }
+
+    public int setShowPrice(GoodsInfo goodsInfo) {
+        return goodsInfoMapper.setShowPrice(goodsInfo);
+    }
 }

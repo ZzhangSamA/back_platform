@@ -15,4 +15,5 @@ public interface GoodsInfoMapper {
     int deleteBySel(Map map);
     GoodsInfo getGoodsById(Integer goodsId);
     int updateGoodsInfo(GoodsInfo goodsInfo);
+    int setShowPrice(GoodsInfo goodsInfo);
 }

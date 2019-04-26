@@ -97,6 +97,9 @@
   <update id="deleteGoodsById" parameterType="com.back.rsx.pojo.GoodsInfo">
         update goods_info set status = 0 ,update_time = now() where goods_id =#{goodsId}
   </update>
+  <update id="setShowPrice" parameterType="com.back.rsx.pojo.GoodsInfo">
+        update goods_info set show_price = #{showPrice} where goods_id =#{goodsId}
+  </update>
   <update id="deleteBySel" parameterType="map">
     update goods_info set status=0 ,update_time = now()  where goods_id in
     <foreach collection="ids" item="goodsId" open="(" separator="," close=")">
