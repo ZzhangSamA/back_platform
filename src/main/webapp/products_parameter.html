@@ -63,7 +63,7 @@
 <script src="jquery/jquery-2.1.1.min.js"></script>
 
 <script>
-
+    var canshu=0;
     var goods_id = window.location.search;
     goods_id = goods_id.split("=")[1];
 
@@ -78,11 +78,12 @@
         success:function (response) {
             console.log(response);
             $(response).each(function (index, item) {
+                canshu++;
                 $("#parameterList").append("<div>&nbsp;"+(index+1)+"、<label style=\"width: 180px\">参数名</label><label style=\"width: 180px\">原价</label><label style=\"width: 180px\">库存</label><label style=\"width: 180px\">现价</label><br/>\n" +
-                    "<input type=\"text\" name=\"parameterName\" placeholder=\"参数名\" value='"+item.parameterName+"'>\n" +
-                    "<input type=\"text\" name=\"parameterPrice\" placeholder=\"原价\" value='"+item.parameterPrice+"'>\n" +
-                    "<input type=\"text\" name=\"stock\" placeholder=\"库存\" value='"+item.stock+"'>\n" +
-                    "<input type=\"text\" name=\"preferentialPrice\" placeholder=\"现价\" value='"+item.preferentialPrice+"'>" +
+                    "<input type=\"text\" id='name"+canshu+"' name=\"parameterName\" placeholder=\"参数名\" value='"+item.parameterName+"'>\n" +
+                    "<input type=\"text\" id='par"+canshu+"' name=\"parameterPrice\" placeholder=\"原价\" value='"+item.parameterPrice+"'>\n" +
+                    "<input type=\"text\" id='stock"+canshu+"' name=\"stock\" placeholder=\"库存\" value='"+item.stock+"'>\n" +
+                    "<input type=\"text\" id='pre"+canshu+"' name=\"preferentialPrice\" placeholder=\"现价\" value='"+item.preferentialPrice+"'>" +
                     "<a onclick=\"deleteInput(this)\" class=\"btn btn-danger\"><i class=\"icon-trash\"></i>删除</a></div><br/>");
             })
         },
@@ -94,10 +95,10 @@
 
     function addInput() {
         $("#parameterList").append("&nbsp;&nbsp;<label style=\"width: 180px\">参数名</label><label style=\"width: 180px\">原价</label><label style=\"width: 180px\">库存</label><label style=\"width: 180px\">现价</label><br/>\n" +
-            "            <input type=\"text\" name=\"parameterName\" placeholder=\"参数名\">\n" +
-            "            <input type=\"text\" name=\"parameterPrice\" placeholder=\"原价\">\n" +
-            "            <input type=\"text\" name=\"stock\" placeholder=\"库存\">\n" +
-            "            <input type=\"text\" name=\"preferentialPrice\" placeholder=\"现价\">" +
+            "            <input type=\"text\" id='name"+canshu+"' name=\"parameterName\" placeholder=\"参数名\">\n" +
+            "            <input type=\"text\" id='par"+canshu+"' name=\"parameterPrice\" placeholder=\"原价\">\n" +
+            "            <input type=\"text\" id='stock"+canshu +"' name=\"stock\" placeholder=\"库存\">\n" +
+            "            <input type=\"text\" id='pre"+canshu+"' name=\"preferentialPrice\" placeholder=\"现价\">" +
             "<a onclick=\"deleteInput(this)\" class=\"btn btn-danger\"><i class=\"icon-trash\"></i>删除</a><br/>")
     }
 
@@ -106,50 +107,104 @@
     }
 
     function submitParameter() {
+        var old = document.getElementsByName("preferentialPrice")[0].value;
         var len = document.getElementsByName("parameterName");
         len = len.length;
-        $.ajax({
-            type: 'POST',
-            url: 'deleteParameterByGoodsId',
-            contentType: 'application/json;charset=utf-8',
-            data: JSON.stringify(
-                goods_id
-            ),
-            success:function (response) {
-                console.log(response);
-            },
-            error:function (response) {
-                console.log(response)
-            },
-            dataType:'json'
-        });
+        var flag =true;
+
         for(var i = 0;i < len;i++) {
+
             var parameterName = document.getElementsByName("parameterName")[i].value;
             var parameterPrice = document.getElementsByName("parameterPrice")[i].value;
             var stock = document.getElementsByName("stock")[i].value;
             var preferentialPrice = document.getElementsByName("preferentialPrice")[i].value;
+            if (old>preferentialPrice){
+                old =preferentialPrice;
+            }
+            if (!(preferentialPrice&&parameterName&&parameterPrice&&stock)) {
+                flag =false;
+            }
+        }
+        if (flag&&old>0) {
             $.ajax({
                 type: 'POST',
-                url: 'insertGoodsParameter',
+                url: 'deleteParameterByGoodsId',
                 contentType: 'application/json;charset=utf-8',
-                async:false,
-                data: JSON.stringify({
-                    "goodsId":goods_id,
-                    "parameterName":parameterName,
-                    "parameterPrice":parameterPrice,
-                    "stock":stock,
-                    "preferentialPrice":preferentialPrice
-                }),
+                data: JSON.stringify(
+                    goods_id
+                ),
                 success:function (response) {
                     console.log(response);
                 },
                 error:function (response) {
-                    console.log(response);
+                    console.log(response)
                 },
                 dataType:'json'
             });
+
+
+            for(var i = 0;i < len;i++) {
+
+                var parameterName = document.getElementsByName("parameterName")[i].value;
+                var parameterPrice = document.getElementsByName("parameterPrice")[i].value;
+                var stock = document.getElementsByName("stock")[i].value;
+                var preferentialPrice = document.getElementsByName("preferentialPrice")[i].value;
+                if (old>preferentialPrice){
+                    old =preferentialPrice;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'insertGoodsParameter',
+                    contentType: 'application/json;charset=utf-8',
+                    async:false,
+                    data: JSON.stringify({
+                        "goodsId":goods_id,
+                        "parameterName":parameterName,
+                        "parameterPrice":parameterPrice,
+                        "stock":stock,
+                        "preferentialPrice":preferentialPrice
+                    }),
+                    success:function (response) {
+                        console.log(response);
+                    },
+                    error:function (response) {
+                        alert("第"+(i+1)+"行操作失败，因为有字段非法")
+                        flag = false;
+                        console.log(response);
+                    },
+                    dataType:'json'
+                });
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'setShowPrice',
+                contentType: 'application/json;charset=utf-8',
+                async: false,
+                data: JSON.stringify({
+                    "goodsId": goods_id,
+                    "showPrice": old
+                }),
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    alert("输入的格式有误")
+                    console.log(response);
+                },
+                dataType: 'json'
+            });
+            if (flag) {
+                location.href="Products_List.html";
+            }
+        }else {
+            alert("字段不合法")
         }
-        location.href="Products_List.html";
+
+
+
+
     }
 </script>
 </html>
