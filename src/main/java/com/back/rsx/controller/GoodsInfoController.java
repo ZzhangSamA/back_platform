@@ -227,9 +227,21 @@ public class GoodsInfoController {
 
         return goodsInfoService.getGoodsById(goodsInfo.getGoodsId());
     }
+
+    /**
+     * 根据商品id获取图片
+     * @param goodsId
+     * @return
+     */
     @RequestMapping(value = "getImageById",method = RequestMethod.POST)
     public Object getImageById(@RequestParam(value = "goodsId")int goodsId){
 
         return goodsImgService.getImageById(goodsId);
     }
+    @RequestMapping(value = "setShowPrice",method = RequestMethod.POST)
+    public Object setShowPrice(@RequestBody(required = false)GoodsInfo goodsInfo){
+
+        return goodsInfoService.setShowPrice(goodsInfo);
+    }
+
     }
