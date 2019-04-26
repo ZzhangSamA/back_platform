@@ -13,7 +13,6 @@ public class OrderInfoVo {
 
     public void setSplitPage(SplitPage splitPage) {
         this.splitPage = splitPage;
-        splitPage.setPageSize(5);
     }
 
     public Customer getCustomer() {

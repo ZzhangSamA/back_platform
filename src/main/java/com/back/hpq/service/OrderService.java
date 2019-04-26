@@ -7,12 +7,13 @@ import com.back.hpq.pojo.TOrder;
 import com.back.hpq.vo.GoodsOrderVo;
 import com.back.hpq.vo.OrderInfoVo;
 import com.back.hpq.vo.ReturnMessageVo;
+import com.back.tools.SplitPage;
 
 
 public interface OrderService {
-    OrderPageDto getOrders(OrderInfoVo orderInfoVo);
+     OrderPageDto getOrders(SplitPage splitPage);
     TOrder getOrderById(int orderId);
-    int getOrderCount(int CustomerId);
+    int getOrderCount();
     int delivery(TOrder tOrder);
     int refuseOrder(TOrder tOrder);
     OrderDetail getOrderDetail(TOrder tOrder);

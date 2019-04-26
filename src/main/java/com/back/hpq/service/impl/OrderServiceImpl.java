@@ -19,25 +19,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired(required = false)
     TOrderMapper tOrderMapper;
-    public OrderPageDto getOrders(OrderInfoVo orderInfoVo) {
-        List<TOrderDto> orders=null;
-        if (orderInfoVo.getCustomer()!=null){
-             orders = tOrderMapper.getOrdersByCustomId(orderInfoVo);
-        }
+    public OrderPageDto getOrders(SplitPage splitPage) {
+        splitPage.setStart((splitPage.getCurrentPage()-1)* splitPage.getPageSize());
+        List<TOrderDto>  orders = tOrderMapper.getOrders(splitPage);
         OrderPageDto orderPageDto = new OrderPageDto();
-        SplitPage splitPage = orderInfoVo.getSplitPage();
-        splitPage.setTotalLine(this.getOrderCount(orderInfoVo.getCustomer().getCustomerId()));
+        splitPage.setTotalLine(this.getOrderCount());
         orderPageDto.setSplitPage(splitPage);
         orderPageDto.setOrderDto(orders);
         return orderPageDto;
     }
 
+
     public TOrder getOrderById(int orderId) {
         return tOrderMapper.selectByPrimaryKey(orderId);
     }
 
-    public int getOrderCount(int customerId) {
-        return tOrderMapper.getOrderCount(customerId);
+    public int getOrderCount() {
+        return tOrderMapper.getOrderCount();
     }
 
     public int delivery(TOrder tOrder) {

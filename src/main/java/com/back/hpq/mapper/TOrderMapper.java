@@ -3,6 +3,7 @@ package com.back.hpq.mapper;
 import com.back.hpq.dto.*;
 import com.back.hpq.pojo.TOrder;
 import com.back.hpq.vo.*;
+import com.back.tools.SplitPage;
 
 import java.util.List;
 
@@ -55,11 +56,11 @@ public interface TOrderMapper {
      */
     int updateByPrimaryKey(TOrder record);
 
-    List<TOrderDto> getOrdersByCustomId(OrderInfoVo orderInfoVo);
+    List<TOrderDto> getOrders(SplitPage splitPage);
 
     int delivery(TOrder tOrder);
 
-    int getOrderCount(int customerId);
+    int getOrderCount();
 
     int getStatus(String orderNumber);
 
