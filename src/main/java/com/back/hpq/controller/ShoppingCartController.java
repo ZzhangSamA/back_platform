@@ -47,6 +47,9 @@ public class ShoppingCartController {
     @RequestMapping(value = "addOneOrder",method = RequestMethod.POST)
     public Object addOneOrder(@RequestBody ShoppingCarVo shoppingCarVo, HttpSession httpSession){
         Customer customer = (Customer)httpSession.getAttribute("customer");
+        if(customer==null){
+            return 0;
+        }
         shoppingCarVo.setCustomerId(customer.getCustomerId());
         return shoppingCart.addOneOrder(shoppingCarVo);
     }

@@ -40,11 +40,8 @@ public class OrderController {
     }
     @RequestMapping(value = "getOrderDetail",method = RequestMethod.POST)
     public Object getOrderDetail(@RequestBody(required = false)TOrder tOrder, HttpSession httpSession){
-        Customer customer = (Customer)httpSession.getAttribute("customer");
-        Integer customerId = customer.getCustomerId();
-        tOrder.setCustomerId(customerId);
-        OrderDetail orderDetail = orderService.getOrderDetail(tOrder);
-        return orderDetail;
+        return   orderService.getOrderDetail(tOrder);
+
 
     }
 

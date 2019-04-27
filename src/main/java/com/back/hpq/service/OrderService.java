@@ -3,6 +3,7 @@ package com.back.hpq.service;
 import com.back.hpq.dto.GoodsDto;
 import com.back.hpq.dto.OrderDetail;
 import com.back.hpq.dto.OrderPageDto;
+import com.back.hpq.dto.TOrderDto;
 import com.back.hpq.pojo.TOrder;
 import com.back.hpq.vo.GoodsOrderVo;
 import com.back.hpq.vo.OrderInfoVo;
@@ -16,7 +17,7 @@ public interface OrderService {
     int getOrderCount();
     int delivery(TOrder tOrder);
     int refuseOrder(TOrder tOrder);
-    OrderDetail getOrderDetail(TOrder tOrder);
+    TOrderDto getOrderDetail(TOrder tOrder);
     int checkedDeliver(TOrder tOrder);
     GoodsDto getGoodsInfo(GoodsOrderVo goodsOrderVo);
     GoodsDto getRefuseGoods(GoodsOrderVo goodsOrderVo);

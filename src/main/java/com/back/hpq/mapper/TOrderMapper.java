@@ -66,7 +66,7 @@ public interface TOrderMapper {
 
     int refuseOrder(TOrder tOrder);
 
-    OrderDetail getOrderDetail(TOrder tOrder);
+    TOrderDto getOrderDetail(TOrder tOrder);
 
     TOrder getCreatTime(TOrder tOrder);
 
