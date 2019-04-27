@@ -99,9 +99,10 @@
 
 											<form id="myform">
 													<input type="text" name="username" id="username" placeholder="请输入登录账号" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"><br>
-													<input type="text" name="password" id="password" placeholder="请输入登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"><br>
-												<input type="checkbox" class="ace">
-												<!--<span class="lbl"><font size="3">保存密码</font></span>-->
+													<input type="password" name="password" id="password" placeholder="请输入登录密码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"><br>
+												<div class="login-toggle-btn">
+													<input type="checkbox" id="within_a_week"  style="zoom:120%;" checked="checked">&nbsp;记住密码
+												</div>
 												<input type="button" class="width-35 btn btn-sm btn-primary" value="登录" id="login_btn" onclick="dologin()">
 											</form>
 											<div class="social-or-login center">
@@ -122,8 +123,26 @@
                         <div class="loginbm">版权所有  2019  <a href="">北京千锋互联科技有限公司</a> </div><strong></strong>
 
 <script>
+	//记住密码
+    window.onload = function(){
+        var rem = unescape(document.cookie).split(";")[0];
+        $("#username").val(rem.split("=")[1]);
+        var mim = document.cookie.split(";")[1];
+        var ii = mim.split("=")[1]
+        $("#password").val("" + ii);
+    }
 
+    //登录
+    var week=$('#within_a_week');
     function dologin() {
+        if(week.prop("checked")){
+
+            // document.cookie="rem=true;path=/"
+            document.cookie="userName="+$("#username").val();
+            document.cookie="password="+$("#password").val();
+        }else{
+            document.cookie="rem=;path=/"
+        }
         $.ajax({
             type: 'POST',
             url: 'loginCheck',

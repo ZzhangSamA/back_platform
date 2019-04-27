@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -120,4 +121,12 @@ public class UserController {
         Boolean flag = this.userService.batchDelUser(map);
         return flag.toString();
     }
+
+
+    @RequestMapping(value = "getSession",method = RequestMethod.GET)
+    public Object getSession(HttpSession set){
+        return  set.getAttribute("user");
+    }
+
+
 }
