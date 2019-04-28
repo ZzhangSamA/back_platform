@@ -63,7 +63,6 @@ public class GoodsInfoController {
         InetAddress ia=null;
         try {
             ia = ia.getLocalHost();
-            System.out.println(ia.getHostAddress());
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -110,8 +109,6 @@ public class GoodsInfoController {
      */
     @RequestMapping(value = "updateGoodsInfo")
     public Object updateGoodsInfo(@RequestBody(required = false)GoodsInfo goodsInfo){
-        System.out.println(goodsInfo);
-
 
         return goodsInfoService.updateGoodsInfo(goodsInfo);
     }
@@ -137,18 +134,15 @@ public class GoodsInfoController {
 
         try {
             ia = ia.getLocalHost();
-            System.out.println(ia.getHostAddress());
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         // 获取服务端路径
         String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
-        System.out.println(serverPath);
         s = fileKit.UploadFile(uploadFile,request);
         map.put("imgName",serverPath + "/"+s);
         goodsImgService.addImgByGoodsId(map);
         map.put("isCover",0);
-        String originalFilename = uploadFile.getOriginalFilename();
         for(int i=0; i<files.length; i++){
             s = fileKit.UploadFile(files[i],request);
             map.put("imgName",serverPath + "/"+s);
@@ -194,7 +188,6 @@ public class GoodsInfoController {
         }
 
 
-        System.out.println(goodsImg);
         return goodsImg;
 
 

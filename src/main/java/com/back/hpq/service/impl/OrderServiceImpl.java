@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         return 0;
     }
 
-    public OrderDetail getOrderDetail(TOrder tOrder) {
+    public TOrderDto getOrderDetail(TOrder tOrder) {
         return tOrderMapper.getOrderDetail(tOrder);
     }
 

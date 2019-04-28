@@ -1,8 +1,12 @@
 package com.back.hpq.dto;
 
+import sun.dc.pr.PRError;
+
+import java.util.List;
+
 public class OrderDetail {
     // 收货人
-  private   String consignee;
+  private  String consignee;
   //收货地址
   private String deliveryAddress;
   //收货人手机
@@ -17,6 +21,26 @@ public class OrderDetail {
   private   String logisticsNumber;
   //订单号
   private String orderNumber;
+
+  private String postalCode;
+
+  private List<GoodsInfoDto> goodsInfoDtos;
+
+    public List<GoodsInfoDto> getGoodsInfoDtos() {
+        return goodsInfoDtos;
+    }
+
+    public void setGoodsInfoDtos(List<GoodsInfoDto> goodsInfoDtos) {
+        this.goodsInfoDtos = goodsInfoDtos;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
     public String getOrderNumber() {
         return orderNumber;

@@ -71,8 +71,6 @@ public class BrandController {
      */
     @RequestMapping(value = "deleteBrandBySel",method = RequestMethod.POST)
     public Object deleteBySel(@RequestParam(value = "ids[]") List<Integer> ids){
-        System.out.println("进入方法");
-        System.out.println(ids);
         Map<String, List> map = new HashMap<String, List>();
         map.put("ids",ids);
         return brandService.deleteBySel(map);
@@ -108,15 +106,12 @@ public class BrandController {
         InetAddress ia=null;
         try {
             ia = ia.getLocalHost();
-            System.out.println(ia.getHostAddress());
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         // 获取服务端路径
         String serverPath = String.format("%s://%s:%s%s/%s", request.getScheme(), ia.getHostAddress(), request.getServerPort(), request.getContextPath(), "products/logo");
-        System.out.println(serverPath);
         brand.setBrandIcon(serverPath + "/"+fileName);
-        System.out.println(brand);
 //
         return brandService.addBrand(brand);
 
@@ -142,7 +137,6 @@ public class BrandController {
             InetAddress ia=null;
             try {
                 ia = ia.getLocalHost();
-                System.out.println(ia.getHostAddress());
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
@@ -158,7 +152,6 @@ public class BrandController {
         brand.setBrandId(Integer.parseInt(brandId));
         brand.setBrandNumber(brandNumber);
         brand.setBrandIcon(icon);
-        System.out.println(brand);
         return brandService.updateBrandById(brand);
 
 

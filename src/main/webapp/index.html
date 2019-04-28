@@ -551,7 +551,6 @@
             contentType: "application/json; charset=utf-8",
             success: function(resp){
                 console.log(resp);
-                alert(resp.userName)
                 $("#name").html(resp.userName);
             },
             error: function (message) {

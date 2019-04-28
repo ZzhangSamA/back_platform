@@ -24,6 +24,10 @@
   <resultMap id="TOrderDtoMap" type="com.back.hpq.dto.TOrderDto">
     <id column="order_number" property="orderNumber" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    <result column="name" property="consignee" jdbcType="VARCHAR" />
+    <result column="address" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="phone" property="consigneePhone" jdbcType="VARCHAR" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR" />
     <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <collection property="goodsInfoDtos" ofType="com.back.hpq.dto.GoodsInfoDto">
@@ -44,12 +48,18 @@
   <resultMap id="orderDetailMap" type="com.back.hpq.dto.OrderDetail">
     <id column="order_number" property="orderNumber" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
-    <result column="order_remarks" property="message" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="name" property="consignee" jdbcType="VARCHAR" />
     <result column="phone" property="consigneePhone" jdbcType="VARCHAR" />
-    <result column="logistics_number" property="logisticsNumber" jdbcType="INTEGER" />
-    <result column="address" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+  <collection property="goodsInfoDtos" ofType="com.back.hpq.dto.GoodsInfoDto">
+    <id column="og_id" property="ogId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="parameter_name" property="parameterName" jdbcType="VARCHAR" />
+    <result column="preferential_price" property="preferentialPrice" jdbcType="DECIMAL" />
+  </collection>
   </resultMap>
   <resultMap id="goodsMap" type="com.back.hpq.dto.GoodsDto">
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
@@ -98,12 +108,10 @@
     where tab1.order_id=og.order_id and og.goods_id=gi.goods_id and gp.parameter_id=og.parameter_id
 
   </select>
-  <select id="getOrderDetail" parameterType="com.back.hpq.pojo.TOrder" resultMap="orderDetailMap">
-      select tab1.status,tab1.order_number,tab1.order_remarks,tab1.name,tab1.phone,tab1.address,tab2.logistics_name,tab2.logistics_number
-      from (SELECT ot.`status`,ot.order_number,ot.order_remarks,sa.`name`,sa.phone,sa.address,ot.order_id
-            from t_order ot,shipping_address sa where ot.order_number=#{orderNumber} and ot.address_id=sa.address_id and ot.customer_id=#{customerId})tab1 LEFT JOIN
-            (SELECT l.logistics_name,ol.logistics_number,ol.order_id
-             from order_logistics ol,logistics l where  ol.logistics_id=l.logistics_id)tab2 on tab1.order_id=tab2.order_id
+  <select id="getOrderDetail" parameterType="com.back.hpq.pojo.TOrder" resultMap="TOrderDtoMap">
+    SELECT sa.name,sa.address,sa.phone,sa.postal_code,ot.order_number,ot.status,ot.total_price,gi.goods_name,og.number,gp.parameter_name,gp.preferential_price
+    FROM t_order ot,shipping_address sa,order_goods og,goods_info gi,goods_parameter gp
+    where ot.order_number=#{orderNumber} and ot.address_id=sa.address_id and og.goods_id=gi.goods_id and og.parameter_id=gp.parameter_id and ot.order_id=og.order_id
   </select>
   <select id="getGoodsInfo" parameterType="com.back.hpq.vo.GoodsOrderVo" resultMap="goodsMap" >
     SELECT  gi.goods_name,gp.parameter_name,gp.parameter_icon from t_order ot,order_goods og,goods_info gi,goods_parameter gp
