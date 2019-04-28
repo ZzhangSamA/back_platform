@@ -233,7 +233,6 @@ public class GoodsInfoController {
     }
     @RequestMapping(value = "setShowPrice",method = RequestMethod.POST)
     public Object setShowPrice(@RequestBody(required = false)GoodsInfo goodsInfo){
-        System.out.println();
         return goodsInfoService.setShowPrice(goodsInfo);
     }
 
