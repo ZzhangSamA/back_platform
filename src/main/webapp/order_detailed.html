@@ -11,8 +11,10 @@
         <link rel="stylesheet" href="assets/css/ace.min.css" />
         <link rel="stylesheet" href="font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
+        <!--快递鸟-->
+        <link rel="stylesheet" href="KDNWidget/KDNWidget.css" />
 		<script src="js/jquery-1.9.1.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
 		<script src="assets/js/typeahead-bs2.min.js"></script> 
@@ -23,6 +25,8 @@
         <script src="assets/laydate/laydate.js" type="text/javascript"></script>
         <script src="assets/js/jquery.easy-pie-chart.min.js"></script>
         <script src="js/lrtk.js" type="text/javascript" ></script>
+        <!--快递鸟-->
+        <script src="KDNWidget/KDNWidget.js"></script>
 <title>订单详细</title>
 </head>
 
@@ -42,7 +46,7 @@
         <div id="mohe-kuaidi_new_nucom">
             <div class="mohe-wrap mh-wrap">
                 <div class="mh-cont mh-list-wrap mh-unfold">
-                    <div class="mh-list">
+                    <div class="mh-list" id="getExpress">
 
                     </div>
                 </div>
@@ -167,6 +171,30 @@
         dataType: "json"
     });
 
+    $.ajax({
+        type:"POST",
+        url:"getOrderByOrderNumber",
+        contentType:"application/json;charset=utf-8",
+        data:JSON.stringify({
+            "orderNumber":orderNumber
+        }),
+        success:function (response) {
+            console.log(response)
+            var x = response.expCode
+            var y = response.expNo
+            KDNWidget.run({
+                serviceType: "B",
+                expCode:x,
+                expNo:y,
+                showType:"normal",
+                container: "getExpress"
+            })
+        },
+        error:function (rseponse) {
+
+        },
+        dataType:'json'
+    })
 
 
 </script>
