@@ -69,6 +69,7 @@ public class GoodsTypeController {
      */
     @RequestMapping(value = "addGoodsType",method = RequestMethod.POST)
     public Object addGoodsType(@RequestBody(required = false) GoodsType goodsType){
+        System.out.println();
         return goodsTypeService.addGoodsType(goodsType);
 
     }

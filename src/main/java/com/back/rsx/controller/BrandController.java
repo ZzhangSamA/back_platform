@@ -60,7 +60,7 @@ public class BrandController {
      */
     @RequestMapping(value = "deleteBrandById",method = RequestMethod.POST)
     public Object deleteBrandById(@RequestBody(required = false) Brand brand){
-
+        System.out.println();
         return brandService.deleteBrandById(brand);
     }
 
