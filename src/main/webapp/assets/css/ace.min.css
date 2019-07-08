@@ -8347,15 +8347,15 @@ th .lbl:only-child,td .lbl:only-child
   font-size: 14px;
 }
 
-.dataTables_paginate
-{
-  text-align: right;
-}
+/*.dataTables_paginate*/
+/*{*/
+  /*text-align: right;*/
+/*}*/
 
-.dataTables_paginate .pagination
-{
-  margin: 0 12px;
-}
+/*.dataTables_paginate .pagination*/
+/*{*/
+  /*margin: 0 12px;*/
+/*}*/
 
 .dataTables_wrapper label
 {
